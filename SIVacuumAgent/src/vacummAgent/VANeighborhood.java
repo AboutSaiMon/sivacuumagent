@@ -6,7 +6,16 @@ public class VANeighborhood {
 	boolean south;
 	boolean east;
 	boolean west;
-	
+
+	public VANeighborhood() {
+		super();
+		this.north = true;
+		this.south = true;
+		this.east = true;
+		this.west = true;
+
+	}
+
 	public VANeighborhood(boolean north, boolean south, boolean east,
 			boolean west) {
 		super();
@@ -15,32 +24,37 @@ public class VANeighborhood {
 		this.east = east;
 		this.west = west;
 	}
-	public boolean isNorth() {
+
+	public boolean northIsFree() {
 		return north;
 	}
+
 	public void setNorth(boolean north) {
 		this.north = north;
 	}
-	public boolean isSouth() {
+
+	public boolean southIsFree() {
 		return south;
 	}
+
 	public void setSouth(boolean south) {
 		this.south = south;
 	}
-	public boolean isEast() {
+
+	public boolean eastIsFree() {
 		return east;
 	}
+
 	public void setEast(boolean east) {
 		this.east = east;
 	}
-	public boolean isWest() {
+
+	public boolean weastIsFree() {
 		return west;
 	}
+
 	public void setWest(boolean west) {
 		this.west = west;
 	}
-	
-	
-	
-	
+
 }

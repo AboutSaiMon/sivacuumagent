@@ -9,17 +9,16 @@ import vacummAgent.VANeighborhood;
 import vacummAgent.VAPercept;
 import vacummAgent.VATile.VATileStatus;
 
+import exception.VAIllegalMove;
 import framework.Agent;
 import framework.Environment;
 
+public abstract class VAEnvironment implements Environment {
 
-public abstract class VAEnvironment implements Environment{
-	
 	protected Agent vacuumAgent;
 	protected Point vacuumAgentPosition;
 	protected VAFloor floor;
-	
-	
+
 	public VAEnvironment(Agent vacuumAgent, Point vacuumAgentPosition,
 			VAFloor floor) {
 		super();
@@ -28,71 +27,81 @@ public abstract class VAEnvironment implements Environment{
 		this.floor = floor;
 	}
 
+	public Point getVacuumAgentPosition() {
+		return vacuumAgentPosition;
+	}
+
+	public void setVacuumAgentPosition(Point vacuumAgentPosition) {
+		this.vacuumAgentPosition = vacuumAgentPosition;
+	}
+
+	public VAFloor getFloor() {
+		return floor;
+	}
+
+	public void setFloor(VAFloor floor) {
+		this.floor = floor;
+	}
 
 	public Agent getVacuumAgent() {
 		return vacuumAgent;
 	}
 
-
-
 	public void setVacuumAgent(Agent vacuumAgent) {
 		this.vacuumAgent = vacuumAgent;
 	}
 
-	
-	protected VAPercept genPerception(){
-		return null;
-	}
-	
+	protected abstract VAPercept genPerception();
+
 	@Override
-	public void step() throws RuntimeException{
+	public void step() throws VAIllegalMove {
 		VAPercept percept = this.genPerception();
 		VAAction action = (VAAction) vacuumAgent.execute(percept);
 		VANeighborhood neighborhood = this.getNeighborhood(vacuumAgentPosition);
-		
-		if(action.getActionType() == VAActionType.SUCK){
+
+		if (action.getActionType() == VAActionType.SUCK) {
 			floor.getTile(vacuumAgentPosition).setStatus(VATileStatus.CLEAN);
 		}
-		if(action.getActionType() == VAActionType.MOVENORTH){			
-			if(!neighborhood.isNorth()){
-				throw new RuntimeException("Illegal Move!");
-			}		
+		if (action.getActionType() == VAActionType.MOVENORTH) {
+			if (!neighborhood.northIsFree()) {
+				throw new VAIllegalMove("Illegal Move!");
+			}
 			vacuumAgentPosition.x++;
 		}
-		if(action.getActionType() == VAActionType.MOVESOUTH){
-			if(!neighborhood.isSouth()){
-				throw new RuntimeException("Illegal Move!");
+		if (action.getActionType() == VAActionType.MOVESOUTH) {
+			if (!neighborhood.southIsFree()) {
+				throw new VAIllegalMove("Illegal Move!");
 			}
 			vacuumAgentPosition.x--;
 		}
-		if(action.getActionType() == VAActionType.MOVEWEST){
-			if(!neighborhood.isWest()){
-				throw new RuntimeException("Illegal Move!");
+		if (action.getActionType() == VAActionType.MOVEWEST) {
+			if (!neighborhood.weastIsFree()) {
+				throw new VAIllegalMove("Illegal Move!");
 			}
 			vacuumAgentPosition.y--;
 		}
-		if(action.getActionType() == VAActionType.MOVEEAST){
-			if(!neighborhood.isEast()){
-				throw new RuntimeException("Illegal Move!");
+		if (action.getActionType() == VAActionType.MOVEEAST) {
+			if (!neighborhood.eastIsFree()) {
+				throw new VAIllegalMove("Illegal Move!");
 			}
 			vacuumAgentPosition.y++;
-		}	
+		}
 	}
 
 	@Override
-	public void step(int n) {
-		for(int i = 0; i < n; i++){
+	public void step(int n) throws VAIllegalMove {
+		for (int i = 0; i < n; i++) {
 			this.step();
 		}
-		
+
 	}
 
 	@Override
-	public void stepUntilDone() {
-		while(!isDone()){
+	public void stepUntilDone() throws VAIllegalMove {
+		while (!isDone()) {
 			this.step();
 		}
-		
+
 	}
 
 	@Override
@@ -106,20 +115,27 @@ public abstract class VAEnvironment implements Environment{
 		// TODO GIOVEDI
 		return 0;
 	}
-	
-	public VANeighborhood getNeighborhood(Point p){
-		
-		boolean north = true; 
-		boolean south = true; 
+
+	public VANeighborhood getNeighborhood(Point p) {
+
+		boolean north = true;
+		boolean south = true;
 		boolean east = true;
 		boolean west = true;
-		
-		
-		if(floor.getTile(new Point(p.x+1, p.y)).getStatus() == VATileStatus.BLOCK){ north = false; }
-		if(floor.getTile(new Point(p.x-1, p.y)).getStatus() == VATileStatus.BLOCK){ south = false; }
-		if(floor.getTile(new Point(p.x, p.y+1)).getStatus() == VATileStatus.BLOCK){ east = false; }
-		if(floor.getTile(new Point(p.x, p.y-1)).getStatus() == VATileStatus.BLOCK){ west = false; }
-		
+
+		if (floor.getTile(new Point(p.x + 1, p.y)).getStatus() == VATileStatus.BLOCK) {
+			north = false;
+		}
+		if (floor.getTile(new Point(p.x - 1, p.y)).getStatus() == VATileStatus.BLOCK) {
+			south = false;
+		}
+		if (floor.getTile(new Point(p.x, p.y + 1)).getStatus() == VATileStatus.BLOCK) {
+			east = false;
+		}
+		if (floor.getTile(new Point(p.x, p.y - 1)).getStatus() == VATileStatus.BLOCK) {
+			west = false;
+		}
+
 		return new VANeighborhood(north, south, east, west);
 	}
 

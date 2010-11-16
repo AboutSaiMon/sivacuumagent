@@ -8,20 +8,22 @@ import vacummAgent.VANeighborhood;
 import vacummAgent.VAPercept;
 import vacummAgent.VATile.VATileStatus;
 
-public class VAEnvNormal extends VAEnvironment{
+public class VAEnvSemiObservable extends VAEnvironment {
 
-	public VAEnvNormal(Agent vacuumAgent, Point vacuumAgentPosition,
+	public VAEnvSemiObservable(Agent vacuumAgent, Point vacuumAgentPosition,
 			VAFloor floor) {
 		super(vacuumAgent, vacuumAgentPosition, floor);
 	}
 
 	@Override
 	protected VAPercept genPerception() {
-		
-		VATileStatus currentTileStatus = floor.getTile(vacuumAgentPosition).getStatus();
+
+		VATileStatus currentTileStatus = floor.getTile(vacuumAgentPosition)
+				.getStatus();
 		VANeighborhood neighborhood = this.getNeighborhood(vacuumAgentPosition);
 		VAFloor undefFloor = new VAFloor(floor.getSize());
-		VAPercept percept = new VAPercept(undefFloor, this.vacuumAgentPosition, currentTileStatus, neighborhood);
+		VAPercept percept = new VAPercept(undefFloor, this.vacuumAgentPosition,
+				currentTileStatus, neighborhood);
 		return percept;
 	}
 
