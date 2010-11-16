@@ -1,5 +1,6 @@
 package framework;
 
+import exception.VAIllegalMove;
 
 /**
  * An abstract description of possible discrete Environments in which Agent(s) 
@@ -13,21 +14,26 @@ package framework;
 public interface Environment {
 	/**
 	 * Move the Environment one time step forward.
+	 * 
+	 * @throws VAIllegalMove
 	 */
-	void step();
+	void step() throws VAIllegalMove;
 
 	/**
 	 * Move the Environment n time steps forward.
 	 * 
 	 * @param n
 	 *            the number of time steps to move the Environment forward.
+	 * @throws VAIllegalMove
 	 */
-	void step(int n);
+	void step(int n) throws VAIllegalMove;
 
 	/**
 	 * Step through time steps until the Environment has no more tasks.
+	 * 
+	 * @throws VAIllegalMove
 	 */
-	void stepUntilDone();
+	void stepUntilDone() throws VAIllegalMove;
 
 	/**
 	 * 

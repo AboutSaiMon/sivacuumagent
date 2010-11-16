@@ -2,17 +2,14 @@ package vacummAgent;
 
 import framework.EnvironmentObject;
 
-public class VATile implements EnvironmentObject{
-	
+public class VATile implements EnvironmentObject {
+
 	public enum VATileStatus {
-		CLEAN,
-		DIRTY,
-		BLOCK,
-		UNDEFINED
+		CLEAN, DIRTY, BLOCK, UNDEFINED
 	}
 
 	VATileStatus status;
-	
+
 	public VATile() {
 		super();
 		status = VATileStatus.UNDEFINED;
