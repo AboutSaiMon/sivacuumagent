@@ -8,9 +8,12 @@ import javax.swing.JButton;
 import javax.swing.JToolBar;
 
 import vacummAgent.VATile.VATileStatus;
-
+/**
+ * @author Claudia, Brunino
+ * 
+ */
 @SuppressWarnings("serial")
-public class ToolBar extends JToolBar implements ActionListener {
+class ToolBar extends JToolBar implements ActionListener {
 
 	private final JButton[] buttons;
 	private DrawPanel drawPanel;
