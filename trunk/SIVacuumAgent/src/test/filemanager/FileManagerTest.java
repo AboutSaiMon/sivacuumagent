@@ -1,7 +1,7 @@
 package test.filemanager;
 
+import exception.FileManagerException;
 import file.FileManager;
-import file.FileManagerException;
 import vacummAgent.VAFloor;
 import vacummAgent.VATile;
 

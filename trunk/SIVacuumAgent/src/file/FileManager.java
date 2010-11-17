@@ -8,6 +8,8 @@ import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 
+import exception.FileManagerException;
+
 import vacummAgent.VAFloor;
 import vacummAgent.VATile;
 import vacummAgent.VATile.VATileStatus;
