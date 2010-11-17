@@ -19,8 +19,13 @@ import vacummAgent.VATile;
 import vacummAgent.VATile.VATileStatus;
 import vacummAgent.environment.VAEnvironment;
 
+/**
+ * @author Claudia, Brunino
+ * 
+ */
 @SuppressWarnings("serial")
-public class DrawPanel extends JPanel implements MouseListener, KeyListener, MouseMotionListener {
+
+class DrawPanel extends JPanel implements MouseListener, KeyListener, MouseMotionListener {
 	private VAEnvironment environment;
 
 	private BufferedImage buffer;
