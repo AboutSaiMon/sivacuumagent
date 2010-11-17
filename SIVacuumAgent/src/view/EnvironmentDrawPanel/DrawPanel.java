@@ -11,6 +11,7 @@ import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
@@ -24,14 +25,13 @@ import vacummAgent.environment.VAEnvironment;
  * 
  */
 @SuppressWarnings("serial")
-
-class DrawPanel extends JPanel implements MouseListener, KeyListener, MouseMotionListener {
+class DrawPanel extends JPanel implements MouseListener, KeyListener,
+		MouseMotionListener {
 	private VAEnvironment environment;
 
 	private BufferedImage buffer;
 	private Graphics2D gbuffer;
 
-	
 	// IMAGE
 	static private BufferedImage tileTexture;
 	static private BufferedImage wall;
@@ -40,6 +40,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener, MouseMotio
 
 	private VATileStatus elementToAdd;
 	private Point mousePosition;
+	private ArrayList<Point> elementsToAdd;
 
 	private int camXpos;
 	private int camYpos;
@@ -49,8 +50,8 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener, MouseMotio
 		super();
 		loadImage();
 		this.environment = environment;
-		
 
+		elementsToAdd = new ArrayList<Point>();
 		this.addMouseListener(this);
 		this.addKeyListener(this);
 		this.addMouseMotionListener(this);
@@ -76,9 +77,11 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener, MouseMotio
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		buffer = new BufferedImage(this.getWidth(), this.getHeight(),BufferedImage.TYPE_INT_RGB);
+		buffer = new BufferedImage(this.getWidth(), this.getHeight(),
+				BufferedImage.TYPE_INT_RGB);
 		gbuffer = buffer.createGraphics();
-		this.draw(gbuffer,camYpos / dimCell,camXpos / dimCell,this.getWidth() / dimCell, this.getHeight()/ dimCell);
+		this.draw(gbuffer, camYpos / dimCell, camXpos / dimCell,
+				this.getWidth() / dimCell, this.getHeight() / dimCell);
 		g.drawImage(buffer, 0, 0, null);
 	}
 
@@ -97,12 +100,10 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener, MouseMotio
 				VATile tile = environment.getFloor().getTile(matrixPos);
 				int r = (i - rowinit) * dimCell;
 				int c = (j - colinit) * dimCell;
-				
 
 				g.drawImage(tileTexture, c, r, dimCell, dimCell, null);
 				if (tile.getStatus() == VATileStatus.BLOCK)
-					g.drawImage(wall, c, r, dimCell,
-							dimCell, null);
+					g.drawImage(wall, c, r, dimCell, dimCell, null);
 				else if (tile.getStatus() == VATileStatus.DIRTY)
 					g.drawImage(powder, c, r, dimCell, dimCell, null);
 			}
@@ -110,10 +111,9 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener, MouseMotio
 		Point agentPosition = this.environment.getVacuumAgentPosition();
 
 		if (elementToAdd == null || elementToAdd != VATileStatus.UNDEFINED)
-			g.drawImage(robotTexture, (agentPosition.y - colinit)
-					* dimCell, (agentPosition.x - rowinit)
-					* dimCell, dimCell,
-					dimCell, null);
+			g.drawImage(robotTexture, (agentPosition.y - colinit) * dimCell,
+					(agentPosition.x - rowinit) * dimCell, dimCell, dimCell,
+					null);
 
 		if (elementToAdd != null && mousePosition != null) {
 			if (elementToAdd == VATileStatus.BLOCK)
@@ -160,11 +160,13 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener, MouseMotio
 	public void removeElement(int row, int col) {
 		int sizefloor = this.environment.getFloor().getSize();
 		if (row >= 0 && row < sizefloor && col >= 0 && col < sizefloor) {
-			this.environment.getFloor().getTile(new Point(row, col)).setStatus(VATileStatus.CLEAN);
+			this.environment.getFloor().getTile(new Point(row, col))
+					.setStatus(VATileStatus.CLEAN);
 			this.repaint();
 		}
 
 	}
+
 	@Override
 	public void keyPressed(KeyEvent e) {
 		this.requestFocus();
@@ -174,7 +176,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener, MouseMotio
 			if (camYpos - dimCell >= 0) {
 				camYpos -= dimCell;
 				this.repaint();
-			}else {
+			} else {
 				camYpos = 0;
 				this.repaint();
 			}
@@ -192,7 +194,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener, MouseMotio
 			if (camXpos - dimCell >= 0) {
 				camXpos -= dimCell;
 				this.repaint();
-			}else {
+			} else {
 				camXpos = 0;
 				this.repaint();
 			}
@@ -214,9 +216,12 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener, MouseMotio
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		int col = (e.getPoint().x+camXpos) / dimCell;
-		int row = (e.getPoint().y+camYpos) / dimCell;
-//		System.out.println("col = "+ col + " row = " + row + " " + e.getPoint().toString() + " camX " + camXpos + " camy " + camYpos + " zoom " + dimCell + "c " + (double)(e.getPoint().x+camXpos) / dimCell + " r " + (e.getPoint().y+camYpos) / dimCell);
+		int col = (e.getPoint().x + camXpos) / dimCell;
+		int row = (e.getPoint().y + camYpos) / dimCell;
+		// System.out.println("col = "+ col + " row = " + row + " " +
+		// e.getPoint().toString() + " camX " + camXpos + " camy " + camYpos +
+		// " zoom " + dimCell + "c " + (double)(e.getPoint().x+camXpos) /
+		// dimCell + " r " + (e.getPoint().y+camYpos) / dimCell);
 		if (e.getButton() == MouseEvent.BUTTON1) {
 			this.addToFloor(row, col);
 		} else if (e.getButton() == MouseEvent.BUTTON3) {
@@ -244,16 +249,25 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener, MouseMotio
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
+		for(Point p: elementsToAdd){
+			this.addToFloor(p.x, p.y);
+			
+		}
+		elementsToAdd.clear();
 
 	}
 
-
-
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+		int col = (e.getPoint().x + camXpos) / dimCell;
+		int row = (e.getPoint().y + camYpos) / dimCell;
+		int sizefloor = this.environment.getFloor().getSize();
+		if (row >= 0 && row < sizefloor && col >= 0 && col < sizefloor) {
+			if (elementToAdd != VATileStatus.UNDEFINED) {
+				elementsToAdd.add(new Point(row, col));
+			} else if (elementToAdd == VATileStatus.UNDEFINED)
+				elementsToAdd.clear();
+		}
 	}
 
 	@Override
