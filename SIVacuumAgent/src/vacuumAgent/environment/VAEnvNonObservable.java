@@ -1,19 +1,37 @@
-package vacummAgent.environment;
+package vacuumAgent.environment;
 
 import java.awt.Point;
 
-import vacummAgent.VAFloor;
-import vacummAgent.VANeighborhood;
-import vacummAgent.VAPercept;
-import vacummAgent.VATile.VATileStatus;
+import vacuumAgent.VAFloor;
+import vacuumAgent.VANeighborhood;
+import vacuumAgent.VAPercept;
+import vacuumAgent.VATile.VATileStatus;
 import framework.Agent;
 
+/**
+ * The Class VAEnvNonObservable.
+ * A non observable VAenvironment.
+ */
 public class VAEnvNonObservable extends VAEnvironment {
 
+	/**
+	 * 
+	 * Instantiates a new vA env non observable.
+	 * 
+	 * @param vacuumAgent
+	 * 				Is the unique agent on this environment.
+	 * @param vacuumAgentPosition
+	 * 				Position of the agent on the environment
+	 * @param floor
+	 * 				Indicates the floor that will be cleaned by the agent
+	 */
 	public VAEnvNonObservable(Agent vacuumAgent, Point vacuumAgentPosition, VAFloor floor) {
 		super(vacuumAgent, vacuumAgentPosition, floor);
 	}
 
+	/* (non-Javadoc)
+	 * @see vacummAgent.environment.VAEnvironment#genPerception()
+	 */
 	@Override
 	protected VAPercept genPerception() {
 

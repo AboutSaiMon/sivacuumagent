@@ -16,9 +16,9 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-import vacummAgent.VATile;
-import vacummAgent.VATile.VATileStatus;
-import vacummAgent.environment.VAEnvironment;
+import vacuumAgent.VATile;
+import vacuumAgent.VATile.VATileStatus;
+import vacuumAgent.environment.VAEnvironment;
 
 /**
  * @author Claudia, Brunino

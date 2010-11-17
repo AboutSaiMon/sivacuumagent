@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JToolBar;
 
-import vacummAgent.VATile.VATileStatus;
+import vacuumAgent.VATile.VATileStatus;
 /**
  * @author Claudia, Brunino
  * 

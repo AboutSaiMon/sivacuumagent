@@ -5,9 +5,7 @@ import exception.VAIllegalMove;
 /**
  * An abstract description of possible discrete Environments in which Agent(s) 
  * can perceive and act.
- */
-
-/**
+ *
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
  */
