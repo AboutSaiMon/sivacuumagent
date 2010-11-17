@@ -6,18 +6,18 @@ import vacummAgent.VATile.VATileStatus;
 
 public class VAFloor {
 
-	int size;
+	private int size;
 	VATile floor[][];
 
 	public VAFloor() {
 		super();
-		this.size = 0;
+		this.setSize(0);
 		this.floor = null;
 	}
 
 	public VAFloor(int size) {
 		super();
-		this.size = size;
+		this.setSize(size);
 		this.floor = new VATile[size][size];
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
@@ -28,7 +28,7 @@ public class VAFloor {
 
 	public VATile getTile(Point p) {
 
-		if (p.x > size || p.y > size || p.x < 0 || p.y < 0) {
+		if (p.x > getSize() || p.y > getSize() || p.x < 0 || p.y < 0) {
 			return new VATile(VATileStatus.BLOCK);
 		}
 
@@ -45,8 +45,12 @@ public class VAFloor {
 
 	public void setFloor(VATile[][] floor) {
 
-		this.size = floor.length;
+		this.setSize(floor.length);
 		this.floor = floor;
+	}
+
+	public void setSize(int size) {
+		this.size = size;
 	}
 
 }
