@@ -2,8 +2,8 @@ package test.filemanager;
 
 import exception.FileManagerException;
 import file.FileManager;
-import vacummAgent.VAFloor;
-import vacummAgent.VATile;
+import vacuumAgent.VAFloor;
+import vacuumAgent.VATile;
 
 
 public class FileManagerTest {

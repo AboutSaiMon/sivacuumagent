@@ -4,7 +4,7 @@ import java.awt.BorderLayout;
 
 import javax.swing.JPanel;
 
-import vacummAgent.environment.VAEnvironment;
+import vacuumAgent.environment.VAEnvironment;
 
 public class FloorPanel extends JPanel{
 

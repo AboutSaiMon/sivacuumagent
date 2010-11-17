@@ -2,9 +2,7 @@ package framework;
 
 /**
  * Describes an Action that can or has been taken by an Agent via one of its Actuators. 
- */
-
-/**
+ *
  * @author Ciaran O'Reilly
  */
 public interface Action {

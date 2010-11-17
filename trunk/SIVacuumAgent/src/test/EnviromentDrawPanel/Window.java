@@ -9,8 +9,8 @@ import java.awt.Point;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
-import vacummAgent.VAFloor;
-import vacummAgent.environment.VAEnvObservable;
+import vacuumAgent.VAFloor;
+import vacuumAgent.environment.VAEnvObservable;
 import view.EnvironmentDrawPanel.FloorPanel;
 
 

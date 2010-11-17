@@ -1,24 +1,39 @@
-package vacummAgent.environment;
+package vacuumAgent.environment;
 
 import java.awt.Point;
 
-import vacummAgent.VAAction;
-import vacummAgent.VAAction.VAActionType;
-import vacummAgent.VAFloor;
-import vacummAgent.VANeighborhood;
-import vacummAgent.VAPercept;
-import vacummAgent.VATile.VATileStatus;
+import vacuumAgent.VAAction;
+import vacuumAgent.VAFloor;
+import vacuumAgent.VANeighborhood;
+import vacuumAgent.VAPercept;
+import vacuumAgent.VAAction.VAActionType;
+import vacuumAgent.VATile.VATileStatus;
 
 import exception.VAIllegalMove;
 import framework.Agent;
 import framework.Environment;
 
+/**
+ * The Class VAEnvironment.
+ * This Environment is properly developed for a Vacuum Agent.
+ */
 public abstract class VAEnvironment implements Environment {
 
 	protected Agent vacuumAgent;
 	protected Point vacuumAgentPosition;
 	protected VAFloor floor;
 
+	
+	/**
+	 * Instantiates a new VAenvironmet.
+	 * 
+	 * @param vacuumAgent
+	 * 				Is the unique agent on this environment.
+	 * @param vacuumAgentPosition
+	 * 				Position of the agent on the environment
+	 * @param floor
+	 * 				Indicates the floor that will be cleaned by the agent
+	 */
 	public VAEnvironment(Agent vacuumAgent, Point vacuumAgentPosition,
 			VAFloor floor) {
 		super();
@@ -26,33 +41,75 @@ public abstract class VAEnvironment implements Environment {
 		this.vacuumAgentPosition = vacuumAgentPosition;
 		this.floor = floor;
 	}
-
+	
+	/**
+	 * Gets the vacuum agent position.
+	 *
+	 * @return the vacuum agent position
+	 */
 	public Point getVacuumAgentPosition() {
 		return vacuumAgentPosition;
 	}
 
+	/**
+	 * Sets the vacuum agent position.
+	 *
+	 * @param vacuumAgentPosition the new vacuum agent position
+	 */
 	public void setVacuumAgentPosition(Point vacuumAgentPosition) {
 		this.vacuumAgentPosition = vacuumAgentPosition;
 	}
 
+	/**
+	 * Gets the floor.
+	 *
+	 * @return the floor
+	 */
 	public VAFloor getFloor() {
 		return floor;
 	}
 
+	/**
+	 * Sets the floor.
+	 *
+	 * @param floor the new floor
+	 */
 	public void setFloor(VAFloor floor) {
 		this.floor = floor;
 	}
 
+	/**
+	 * Gets the vacuum agent.
+	 *
+	 * @return the vacuum agent
+	 */
 	public Agent getVacuumAgent() {
 		return vacuumAgent;
 	}
 
+	/**
+	 * Sets the vacuum agent.
+	 *
+	 * @param vacuumAgent the new vacuum agent
+	 */
 	public void setVacuumAgent(Agent vacuumAgent) {
 		this.vacuumAgent = vacuumAgent;
 	}
 
+	/**
+	 * Generate a perception for the agent according to the environment type.
+	 * 
+	 * @return A perception for the agent according to the environment type.
+	 */
 	protected abstract VAPercept genPerception();
 
+	/**
+	 * The environment goes on by a step:
+	 * The vacuum agent does an action.
+	 * The environment evolves consequently.
+	 *
+	 * @throws VAIllegalMove the vA illegal move
+	 */
 	@Override
 	public void step() throws VAIllegalMove {
 		VAPercept percept = this.genPerception();
@@ -88,6 +145,13 @@ public abstract class VAEnvironment implements Environment {
 		}
 	}
 
+	/**
+	 * Evolves the environment by n steps.
+	 *
+	 * @param n 
+	 * 		numbers of step to go on.
+	 * @throws VAIllegalMove the vA illegal move
+	 */
 	@Override
 	public void step(int n) throws VAIllegalMove {
 		for (int i = 0; i < n; i++) {
@@ -95,7 +159,12 @@ public abstract class VAEnvironment implements Environment {
 		}
 
 	}
-
+	
+	/**
+	 *  Evolves the environment until the end.
+	 * 
+	 * @throw VAIllegalMove
+	 */
 	@Override
 	public void stepUntilDone() throws VAIllegalMove {
 		while (!isDone()) {
@@ -104,18 +173,32 @@ public abstract class VAEnvironment implements Environment {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see framework.Environment#isDone()
+	 */
 	@Override
 	public boolean isDone() {
 		// TODO GIOVEDI
 		return false;
 	}
 
+	/* (non-Javadoc)
+	 * @see framework.Environment#getPerformanceMeasure(framework.Agent)
+	 */
 	@Override
 	public double getPerformanceMeasure(Agent forAgent) {
 		// TODO GIOVEDI
 		return 0;
 	}
 
+	/**
+	 * Given a position, gets the status of adjacent tiles.
+	 * (if they're accessible or not)
+	 *
+	 * @param p a position in the map.
+	 * 
+	 * @return the neighborhood state.
+	 */
 	public VANeighborhood getNeighborhood(Point p) {
 
 		boolean north = true;
