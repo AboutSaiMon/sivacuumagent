@@ -31,6 +31,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,
 
 	private BufferedImage buffer;
 	private Graphics2D gbuffer;
+	private boolean clickButton1;
 
 	// IMAGE
 	static private BufferedImage tileTexture;
@@ -59,7 +60,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,
 		this.camXpos = 0;
 		this.camYpos = 0;
 		this.dimCell = 60;
-
+		this.clickButton1 = false;
 		elementToAdd = null;
 		mousePosition = null;
 	}
@@ -142,7 +143,7 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,
 
 			Point pos = new Point(row, col);
 			if (row >= 0 && row < sizefloor && col >= 0 && col < sizefloor) {
-				if (elementToAdd != VATileStatus.UNDEFINED)
+				if (elementToAdd != VATileStatus.UNDEFINED && !environment.getVacuumAgentPosition().equals(pos))
 					this.environment.getFloor().getTile(pos)
 							.setStatus(elementToAdd);
 				else if (elementToAdd == VATileStatus.UNDEFINED
@@ -242,32 +243,40 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener,
 	}
 
 	@Override
-	public void mousePressed(MouseEvent arg0) {
+	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
+		if(e.getButton() == MouseEvent.BUTTON1)
+			clickButton1 = true;
 
 	}
 
 	@Override
-	public void mouseReleased(MouseEvent arg0) {
-		for(Point p: elementsToAdd){
-			this.addToFloor(p.x, p.y);
-			
-		}
+	public void mouseReleased(MouseEvent e) {
+		if(e.getButton() == MouseEvent.BUTTON1)
+			clickButton1 = false;
+			for(Point p: elementsToAdd){
+				this.addToFloor(p.x, p.y);
+				
+			}
+		
 		elementsToAdd.clear();
 
 	}
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		int col = (e.getPoint().x + camXpos) / dimCell;
-		int row = (e.getPoint().y + camYpos) / dimCell;
-		int sizefloor = this.environment.getFloor().getSize();
-		if (row >= 0 && row < sizefloor && col >= 0 && col < sizefloor) {
-			if (elementToAdd != VATileStatus.UNDEFINED) {
-				elementsToAdd.add(new Point(row, col));
-			} else if (elementToAdd == VATileStatus.UNDEFINED)
-				elementsToAdd.clear();
-		}
+			if(clickButton1){
+			int col = (e.getPoint().x + camXpos) / dimCell;
+			int row = (e.getPoint().y + camYpos) / dimCell;
+			int sizefloor = this.environment.getFloor().getSize();
+			if (row >= 0 && row < sizefloor && col >= 0 && col < sizefloor) {
+				if (elementToAdd != VATileStatus.UNDEFINED) {
+					elementsToAdd.add(new Point(row, col));
+				} else if (elementToAdd == VATileStatus.UNDEFINED)
+					elementsToAdd.clear();
+			}
+			}
+		
 	}
 
 	@Override
