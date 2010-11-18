@@ -11,11 +11,8 @@ public class VATile implements EnvironmentObject {
 	 * The Enum VATileStatus.
 	 */
 	public enum VATileStatus {
-		
-		CLEAN, 
- DIRTY, 
- BLOCK, 
- UNDEFINED
+
+		CLEAN, DIRTY, BLOCK, UNDEFINED
 	}
 
 	/** The tile's status. */
@@ -31,8 +28,9 @@ public class VATile implements EnvironmentObject {
 
 	/**
 	 * Instantiates a new vA tile.
-	 *
-	 * @param status the tile's status
+	 * 
+	 * @param status
+	 *            the tile's status
 	 */
 	public VATile(VATileStatus status) {
 		super();
@@ -41,7 +39,7 @@ public class VATile implements EnvironmentObject {
 
 	/**
 	 * Gets the tile's status.
-	 *
+	 * 
 	 * @return the status
 	 */
 	public VATileStatus getStatus() {
@@ -50,8 +48,9 @@ public class VATile implements EnvironmentObject {
 
 	/**
 	 * Sets the tile's status.
-	 *
-	 * @param status the new tile's status
+	 * 
+	 * @param status
+	 *            the new tile's status
 	 */
 	public void setStatus(VATileStatus status) {
 		this.status = status;
