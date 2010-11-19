@@ -11,6 +11,6 @@ public class Constants {
 	public static String WALLPERCENT = "WALL PERCENT";
 	public static String DUSTPERCENT = "DUST PERCENT";
 	public static String ERROR = "ERROR";
-	public static String ERRORONNUMBER = "You have to insert numberics values.";
+	public static String ERRORONNUMBER = "You have to insert numeric values.";
 	public static String ERRORPARAMETERS = "Max tails number = 1000\nMax wall percent value = 40\nMax dust percent value = 60\nDust";
 }
