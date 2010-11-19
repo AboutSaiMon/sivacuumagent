@@ -13,4 +13,5 @@ public class Constants {
 	public static String ERROR = "ERROR";
 	public static String ERRORONNUMBER = "You have to insert numeric values.";
 	public static String ERRORPARAMETERS = "Max tails number = 1000\nMax wall percent value = 40\nMax dust percent value = 60\nDust";
+	public static String ERRORNEGATIVENUMBERS = "Please insert only positive numbers.";
 }
