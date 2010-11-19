@@ -24,6 +24,7 @@ public class GenerateRandomly implements ActionListener {
 		frame.setVisible( true );
 		frame.setDefaultCloseOperation( JFrame.DISPOSE_ON_CLOSE );
 		frame.setSize( 230, 150 );
+		frame.setLocation( 300, 300 );
 		
 		JPanel panel = new JPanel();
 		
