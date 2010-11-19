@@ -1,15 +1,18 @@
 package main;
 
+import java.awt.Point;
+
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 import util.constants.Constants;
+import vacuumAgent.VAFloor;
+import view.principal.GenerateMap;
 import view.principal.GenerateRandomly;
 import view.principal.OpenFileChooser;
 import view.principal.PrincipalPanel;
-import view.principal.SaveFileChooser;
 
 public class Main extends JFrame{
 
@@ -22,7 +25,10 @@ public class Main extends JFrame{
 	JMenuItem save = new JMenuItem( Constants.SAVE );
 	JMenuItem generateRandomly = new JMenuItem( Constants.GENERATERANDOMLY );
 	JMenuItem generateMap = new JMenuItem( Constants.GENERATEMAP );
-
+	
+	VAFloor floor = new VAFloor( 100 );
+	Point point = new Point( 2, 0 );
+	
 	public Main() {
 		// TODO Auto-generated constructor stub
 		super( Constants.TITLE );
@@ -32,16 +38,17 @@ public class Main extends JFrame{
 		JMenuBar menuBar = new JMenuBar();
 		JMenu file = new JMenu( "File" );
 		
-		load.addActionListener( new OpenFileChooser( panel ) );
-		save.addActionListener( new SaveFileChooser( panel ) );
-
+		load.addActionListener( new OpenFileChooser( this ) );
+		save.setEnabled( false );
+		
 		file.add( load );
 		file.add( save );
 
 		JMenu generate = new JMenu( "Generate" );
 				
 		generateRandomly.addActionListener( new GenerateRandomly() );
-
+		generateMap.addActionListener( new GenerateMap( this ) );
+		
 		generate.add( generateRandomly );
 		generate.add( generateMap );		
 
@@ -54,7 +61,8 @@ public class Main extends JFrame{
 		this.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
 
 		this.setJMenuBar( menuBar );
-		this.setSize(300, 300);		
+		this.setSize( 300, 200 );		
+		this.setLocation( 300, 300 );
 	}
 	
 	public JMenuItem getLoad() {
@@ -77,7 +85,7 @@ public class Main extends JFrame{
 		return generateRandomly;
 	}
 
-	public void setGenerateRandomly(JMenuItem generateRandomly) {
+	public void setGenerateRandomly( JMenuItem generateRandomly ) {
 		this.generateRandomly = generateRandomly;
 	}
 
@@ -85,14 +93,30 @@ public class Main extends JFrame{
 		return generateMap;
 	}
 
-	public void setGenerateMap(JMenuItem generateMap) {
+	public void setGenerateMap( JMenuItem generateMap ) {
 		this.generateMap = generateMap;
+	}
+
+	public VAFloor getFloor() {
+		return floor;
+	}
+
+	public void setFloor(VAFloor floor) {
+		this.floor = floor;
+	}
+
+	public Point getPoint() {
+		return point;
+	}
+
+	public void setPoint(Point point) {
+		this.point = point;
 	}
 
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {
+	public static void main( String[] args ) {
 		// TODO Auto-generated method stub
 		new Main();
 	}

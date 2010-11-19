@@ -6,18 +6,20 @@ import java.io.File;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 
+import file.FileManager;
+
+import main.Main;
 import util.constants.Constants;
 
 public class SaveFileChooser implements ActionListener {
 
-	JPanel panel;
+	Main frame;
 	
-	public SaveFileChooser( JPanel panel ) 
+	public SaveFileChooser( Main frame ) 
 	{
 		super();
-		this.panel = panel;
+		this.frame = frame;
 	}
 	
 	@Override
@@ -26,12 +28,11 @@ public class SaveFileChooser implements ActionListener {
 		// TODO Auto-generated method stub
 		try {
 			JFileChooser fileChooser = new JFileChooser();				
-			int n = fileChooser.showSaveDialog( panel );
+			int n = fileChooser.showSaveDialog( frame );
 			if ( n == JFileChooser.APPROVE_OPTION ) {
 				File f = fileChooser.getSelectedFile();
 				String path = f.getCanonicalPath();
-				
-				
+				FileManager.save( frame.getFloor(), path );
 			}
 		} catch ( Exception ex ) 
 		{
