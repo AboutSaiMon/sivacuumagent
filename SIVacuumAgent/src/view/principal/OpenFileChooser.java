@@ -12,6 +12,7 @@ import main.Main;
 import util.constants.Constants;
 import vacuumAgent.VAFloor;
 import vacuumAgent.environment.VAEnvObservable;
+import vacuumAgent.environment.VAEnvironment;
 import view.EnvironmentDrawPanel.FloorPanel;
 import file.FileManager;
 
@@ -38,9 +39,13 @@ public class OpenFileChooser implements ActionListener {
 			if ( n == JFileChooser.APPROVE_OPTION ){
 				File f = fileChooser.getSelectedFile();
 				String path = f.getCanonicalPath();
+//				
+//				VAFloor loadedMap = FileManager.load( path );
+//				Point p = new Point( 0, 0 );				
+				VAEnvironment env= FileManager.load( path );
+				VAFloor loadedMap = env.getFloor();
+				Point p = env.getVacuumAgentPosition();			
 				
-				VAFloor loadedMap = FileManager.load( path );
-				Point p = new Point( 0, 0 );				
 				FloorPanel floorPanel;
 				VAEnvObservable state = new VAEnvObservable( null, p, loadedMap );				
 				floorPanel = new FloorPanel( state );
