@@ -27,7 +27,7 @@ public class Main extends JFrame{
 	JMenuItem generateMap = new JMenuItem( Constants.GENERATEMAP );
 	
 	VAFloor floor = new VAFloor( 100 );
-	Point point = new Point( 2, 0 );
+	Point point = new Point( 0, 0 );
 	
 	public Main() {
 		// TODO Auto-generated constructor stub
@@ -69,7 +69,7 @@ public class Main extends JFrame{
 		return load;
 	}
 
-	public void setLoad(JMenuItem load) {
+	public void setLoad( JMenuItem load ) {
 		this.load = load;
 	}
 
@@ -77,7 +77,7 @@ public class Main extends JFrame{
 		return save;
 	}
 
-	public void setSave(JMenuItem save) {
+	public void setSave( JMenuItem save ) {
 		this.save = save;
 	}
 
@@ -101,7 +101,7 @@ public class Main extends JFrame{
 		return floor;
 	}
 
-	public void setFloor(VAFloor floor) {
+	public void setFloor( VAFloor floor ) {
 		this.floor = floor;
 	}
 
@@ -109,7 +109,7 @@ public class Main extends JFrame{
 		return point;
 	}
 
-	public void setPoint(Point point) {
+	public void setPoint( Point point ) {
 		this.point = point;
 	}
 
