@@ -1,5 +1,6 @@
 package file;
 
+import java.awt.Point;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,52 +12,87 @@ import org.apache.commons.io.FileUtils;
 import exception.FileManagerException;
 
 import vacuumAgent.VAFloor;
+import vacuumAgent.VAPercept;
 import vacuumAgent.VATile;
 import vacuumAgent.VATile.VATileStatus;
-
+import vacuumAgent.environment.VAEnvironment;
 
 /**
  * @author Giovanna,Maria,Antonia
  * 
  */
 public class FileManager {
-	public static VAFloor load(String filePath) throws FileManagerException {
+
+	static final int INDEX_FLOOR_SIZE = 1;
+	static final int INDEX_AGENT_POSITION = 0;
+
+	public static VAEnvironment load(String filePath)
+			throws FileManagerException {
 		File file = new File(filePath);
-		VAFloor floor = createByStream(file);
-		return floor;
+		VAEnvironment environment = createByStream(file);
+		return environment;
 	}
 
-	private static VAFloor createByStream(File file) throws FileManagerException {
+	private static VAEnvironment createByStream(File file)
+			throws FileManagerException {
+
 		List<String> lines = null;
 		try {
 			lines = FileUtils.readLines(file);
 		} catch (IOException e) {
 			throw new FileManagerException(e);
 		}
-		if (!lines.get(0).trim().matches("size=[0-9]+"))
+		if (!lines.get(INDEX_AGENT_POSITION).trim()
+				.matches("agentPosition=[0-9]+,[0-9]+"))
+			throw new FileManagerException(
+					"La mappa caricata non è corretta : posizione dell'agente non dichiarata correttamente");
+		if (!lines.get(INDEX_FLOOR_SIZE).trim().matches("size=[0-9]+"))
 			throw new FileManagerException(
 					"La mappa caricata non è corretta : dimensione non dichiarata correttamente");
-		Integer sizeMap = Integer.parseInt(lines.get(0).trim()
+
+		Integer sizeMap = Integer.parseInt(lines.get(INDEX_FLOOR_SIZE).trim()
 				.replace("size=", ""));
-		if (lines.size() - 1 != sizeMap)
+		if (lines.size() - 2 != sizeMap)
 			throw new FileManagerException(
 					"La mappa caricata non è corretta : il numero di righe della mappa non corrisponde alla dimensione dichiarata");
 		VAFloor floor = new VAFloor();
 		VATile[][] tiles = initMap(sizeMap);
-		for (int i = 1; i < lines.size(); i++) {
+		for (int i = 2; i < lines.size(); i++) {
 			String rowString = lines.get(i);
 			if (rowString.length() != sizeMap)
 				throw new FileManagerException(
 						"La mappa caricata non è corretta : il numero di colonne della mappa non corrisponde alla dimensione dichiarata");
 			for (int j = 0; j < rowString.length(); j++) {
-				int ordinal= Integer.parseInt(String.copyValueOf(new char[]{rowString.charAt(j)}));
+				int ordinal = Integer.parseInt(String
+						.copyValueOf(new char[] { rowString.charAt(j) }));
 				VATileStatus type = VATileStatus.values()[ordinal];
-				tiles[i - 1][j].setStatus(type);
+				tiles[i - 2][j].setStatus(type);
 			}
 		}
+		// Caricamento posizione agente
+		String positionString = lines.get(INDEX_AGENT_POSITION).replace(
+				"agentPosition=", "");
+		int x_posAgent = Integer.parseInt(positionString.split(",")[0]);
+		int y_posAgent = Integer.parseInt(positionString.split(",")[1]);
+		Point positionAgent = new Point(x_posAgent, y_posAgent);
+		if (x_posAgent >= sizeMap
+				|| y_posAgent >= sizeMap
+				|| tiles[x_posAgent][y_posAgent].getStatus().equals(
+						VATileStatus.BLOCK))
+			throw new FileManagerException(
+					"La mappa caricata non è corretta : posizione dell'agente fuori mappa o in posizione occupata da un ostacolo!");
+
 		floor.setSize(sizeMap);
 		floor.setFloor(tiles);
-		return floor;
+
+		VAEnvironment env = new VAEnvironment(null, positionAgent,floor) {
+			
+			@Override
+			protected VAPercept genPerception() {
+				return null;
+			}
+		} ;
+		return env;
 
 	}
 
@@ -70,14 +106,14 @@ public class FileManager {
 		return tiles;
 	}
 
-	public static void save(VAFloor floor, String filePath)
+	public static void save(VAEnvironment environment, String filePath)
 			throws FileManagerException {
 
-		Collection<String> lines = generateStream(floor);
+		Collection<String> lines = generateStream(environment);
 		File file = new File(filePath);
-//		CONTROLLO SE IL FILE ESISTE...
-//		if (file.exists())
-//			throw new FileManagerException("File esistente");
+		// CONTROLLO SE IL FILE ESISTE...
+		// if (file.exists())
+		// throw new FileManagerException("File esistente");
 		try {
 			FileUtils.writeLines(file, lines);
 		} catch (IOException e) {
@@ -86,11 +122,14 @@ public class FileManager {
 
 	}
 
-	private static Collection<String> generateStream(VAFloor floor) {
+	private static Collection<String> generateStream(VAEnvironment environment) {
 		List<String> map = new ArrayList<String>();
-		String sizeLines = "size=" + floor.getSize();
+		Point vacuumAgentPosition = environment.getVacuumAgentPosition();
+		map.add("agentPosition="+vacuumAgentPosition.x+","+vacuumAgentPosition.y);
+		VAFloor env_floor=environment.getFloor();
+		String sizeLines = "size=" + env_floor.getSize();
 		map.add(sizeLines);
-		VATile[][] tiles = floor.getFloor();
+		VATile[][] tiles = env_floor.getFloor();
 		for (VATile[] tilesRow : tiles) {
 			String rowLine = "";
 			for (VATile tileCol : tilesRow) {
