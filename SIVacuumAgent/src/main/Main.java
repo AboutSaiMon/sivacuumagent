@@ -8,13 +8,20 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 import util.constants.Constants;
+import vacuumAgent.VAAction;
 import vacuumAgent.VAFloor;
+import vacuumAgent.VAPercept;
+import vacuumAgent.VAAction.VAActionType;
+import vacuumAgent.VATile.VATileStatus;
 import vacuumAgent.environment.VAEnvObservable;
 import vacuumAgent.environment.VAEnvironment;
 import view.principal.GenerateMap;
 import view.principal.GenerateRandomlyActionListener;
 import view.principal.OpenFileChooserActionListener;
 import view.principal.PrincipalPanel;
+import framework.Action;
+import framework.Agent;
+import framework.Percept;
 
 public class Main extends JFrame{
 
@@ -142,8 +149,49 @@ public class Main extends JFrame{
 		// TODO Auto-generated method stub
 		VAFloor floor = new VAFloor( 100 );
 		Point point = new Point( 0, 0 );
+		Agent a = new Agent() {
+			
+			@Override
+			public void setAlive(boolean alive) {
+				// TODO Auto-generated method stub
 				
-		VAEnvObservable state = new VAEnvObservable( null, point, floor );
+			}
+			
+			@Override
+			public boolean isAlive() {
+				// TODO Auto-generated method stub
+				return false;
+			}
+			
+			@Override
+			public Action execute(Percept percept) {
+				// TODO Auto-generated method stub
+				VAPercept p = (VAPercept) percept;
+				VATileStatus status = p.getCurrentTileStatus();
+				
+				VAAction a;
+				if( status == VATileStatus.DIRTY )
+				{
+					a = new VAAction(VAActionType.SUCK);
+				}
+				else
+				{
+					if( p.getNeighborhood().eastIsFree() )
+						a = new VAAction(VAActionType.MOVEEAST);
+					else if( p.getNeighborhood().northIsFree() )
+						a = new VAAction(VAActionType.MOVENORTH);
+					else if( p.getNeighborhood().southIsFree())
+						a = new VAAction(VAActionType.MOVESOUTH);
+					else if( p.getNeighborhood().westIsFree())
+						a = new VAAction(VAActionType.MOVEWEST);
+					else
+						a = new VAAction(VAActionType.SUCK);
+				}
+				return a;
+			}
+		};
+				
+		VAEnvObservable state = new VAEnvObservable( a, point, floor );
 		
 		new Main( state );
 	}

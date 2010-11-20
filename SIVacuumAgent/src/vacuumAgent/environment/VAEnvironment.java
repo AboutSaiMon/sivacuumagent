@@ -132,7 +132,7 @@ public abstract class VAEnvironment implements Environment {
 			vacuumAgentPosition.x--;
 		}
 		if (action.getActionType() == VAActionType.MOVEWEST) {
-			if (!neighborhood.weastIsFree()) {
+			if (!neighborhood.westIsFree()) {
 				throw new VAIllegalMove("Illegal Move!");
 			}
 			vacuumAgentPosition.y--;
