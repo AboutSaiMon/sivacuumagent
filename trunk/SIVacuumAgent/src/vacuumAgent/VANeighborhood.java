@@ -98,11 +98,11 @@ public class VANeighborhood {
 	}
 
 	/**
-	 * Weast is free.
+	 * West is free.
 	 *
 	 * @return true, if successful
 	 */
-	public boolean weastIsFree() {
+	public boolean westIsFree() {
 		return west;
 	}
 

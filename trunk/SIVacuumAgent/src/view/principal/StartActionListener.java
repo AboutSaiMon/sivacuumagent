@@ -3,13 +3,13 @@ package view.principal;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import exception.VAIllegalMove;
-
 import main.Main;
 import vacuumAgent.environment.VAEnvironment;
 import view.EnvironmentDrawPanel.FloorPanel;
+import exception.VAIllegalMove;
 
-public class StartActionListener implements ActionListener {
+public class StartActionListener implements ActionListener, Runnable
+{
 
 	Main frame;
 	int step;
@@ -26,15 +26,22 @@ public class StartActionListener implements ActionListener {
 		FloorPanel floor = ( FloorPanel ) frame.getContentPane();
 		floor.setEditable( false );
 		frame.getSave().setEnabled( false );
-		
+		Thread t = new Thread( this );
+		t.start();
+	}
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
 		VAEnvironment environment = frame.getEnvironment();
-		
 		try 
 		{
 			if( step == 0 )
 			{
-				environment.stepUntilDone();
-				frame.getMoveOneStep().setEnabled( false );
+				while( !environment.isDone() )
+				{
+					environment.step( 1 );
+				}
 			}
 			else
 				environment.step( step );
@@ -46,5 +53,4 @@ public class StartActionListener implements ActionListener {
 			e.printStackTrace();
 		}
 	}
-
 }
