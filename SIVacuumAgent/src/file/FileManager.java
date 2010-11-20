@@ -55,7 +55,7 @@ public class FileManager {
 		if (lines.size() - 2 != sizeMap)
 			throw new FileManagerException(
 					"La mappa caricata non è corretta : il numero di righe della mappa non corrisponde alla dimensione dichiarata");
-		VAFloor floor = new VAFloor();
+		
 		VATile[][] tiles = initMap(sizeMap);
 		for (int i = 2; i < lines.size(); i++) {
 			String rowString = lines.get(i);
@@ -82,7 +82,7 @@ public class FileManager {
 			throw new FileManagerException(
 					"La mappa caricata non è corretta : posizione dell'agente fuori mappa o in posizione occupata da un ostacolo!");
 
-		floor.setSize(sizeMap);
+		VAFloor floor = new VAFloor(sizeMap);
 		floor.setFloor(tiles);
 
 		VAEnvironment env = new VAEnvironment(null, positionAgent,floor) {
@@ -108,7 +108,7 @@ public class FileManager {
 
 	public static void save(VAEnvironment environment, String filePath)
 			throws FileManagerException {
-
+System.out.println("");
 		Collection<String> lines = generateStream(environment);
 		File file = new File(filePath);
 		// CONTROLLO SE IL FILE ESISTE...

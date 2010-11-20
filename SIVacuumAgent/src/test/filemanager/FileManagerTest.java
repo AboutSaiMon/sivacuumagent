@@ -10,7 +10,7 @@ public class FileManagerTest {
 
 	
 	public static void main(String[] args) throws FileManagerException {
-		VAEnvironment load = FileManager.load("esempio.map");
+		VAEnvironment load = FileManager.load("esempiosave.map");
 		System.out.println("Agent position = "+load.getVacuumAgentPosition().toString());
 		System.out.println("Size = "+load.getFloor().getSize());
 		VATile[][] map = load.getFloor().getFloor();
@@ -20,6 +20,6 @@ public class FileManagerTest {
 			}
 			System.out.println();
 		}
-		FileManager.save(load, "esempiosave.map");
+		FileManager.save(load, "esempiosave2.map");
 	}
 }

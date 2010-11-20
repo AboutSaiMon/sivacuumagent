@@ -10,9 +10,9 @@ import vacuumAgent.VATile.VATileStatus;
  */
 public class VAFloor {
 
-	/** The size. */
-	private int size;
-	
+//	/** The size. */
+//	private int size;
+
 	/** The floor. */
 	VATile floor[][];
 
@@ -21,18 +21,19 @@ public class VAFloor {
 	 */
 	public VAFloor() {
 		super();
-		this.setSize(0);
+//		size = 0;
 		this.floor = null;
 	}
 
 	/**
 	 * Instantiates a new vA floor.
-	 *
-	 * @param size the size
+	 * 
+	 * @param size
+	 *            the size
 	 */
 	public VAFloor(int size) {
 		super();
-		this.setSize(size);
+//		size=this.size;
 		this.floor = new VATile[size][size];
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
@@ -43,8 +44,9 @@ public class VAFloor {
 
 	/**
 	 * Gets the tile.
-	 *
-	 * @param p the p
+	 * 
+	 * @param p
+	 *            the p
 	 * @return the tile
 	 */
 	public VATile getTile(Point p) {
@@ -58,16 +60,16 @@ public class VAFloor {
 
 	/**
 	 * Gets the size.
-	 *
+	 * 
 	 * @return the size
 	 */
 	public int getSize() {
-		return size;
+		return (floor==null?0:floor.length);
 	}
 
 	/**
 	 * Gets the floor.
-	 *
+	 * 
 	 * @return the floor
 	 */
 	public VATile[][] getFloor() {
@@ -76,22 +78,27 @@ public class VAFloor {
 
 	/**
 	 * Sets the floor.
-	 *
-	 * @param floor the new floor
+	 * 
+	 * @param floor
+	 *            the new floor
 	 */
 	public void setFloor(VATile[][] floor) {
 
-		this.setSize(floor.length);
+//		size = floor.length; 
 		this.floor = floor;
 	}
 
-	/**
-	 * Sets the size.
-	 *
-	 * @param size the new size
-	 */
-	public void setSize(int size) {
-		this.size = size;
-	}
+	// Ho commentato questo meto in quanto penso che non sia possibile
+	// modificare la size del pavimento lasciando la matrice di un altra
+	// dimensione.. Giovanna
+	// /**
+	// * Sets the size.
+	// *
+	// * @param size the new size
+	// */
+	// public void setSize(int size) {
+	// this.size = size;
+	//
+	// }
 
 }

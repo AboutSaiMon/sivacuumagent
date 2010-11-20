@@ -10,7 +10,6 @@ import javax.swing.JMenuItem;
 
 import util.constants.Constants;
 import vacuumAgent.VAAction;
-import vacuumAgent.VAFloor;
 import vacuumAgent.VAPercept;
 import vacuumAgent.VAAction.VAActionType;
 import vacuumAgent.VATile.VATileStatus;
@@ -76,7 +75,6 @@ public class Main extends JFrame{
 		menuBar.add( file );
 		menuBar.add( generate );
 		menuBar.add( action );
-		
 		this.setContentPane( panel );
 		this.setResizable( false );
 		this.setVisible( true );
@@ -147,8 +145,6 @@ public class Main extends JFrame{
 	 * @param args
 	 */
 	public static void main( String[] args ) {
-		// TODO Auto-generated method stub
-		VAFloor floor = new VAFloor( 100 );
 		Point point = new Point( 0, 0 );
 		Agent a = new Agent() {
 			
@@ -214,7 +210,7 @@ public class Main extends JFrame{
 			}
 		};
 				
-		VAEnvObservable state = new VAEnvObservable( a, point, floor );
+		VAEnvObservable state = new VAEnvObservable( a, point, null );
 		
 		new Main( state );
 	}
