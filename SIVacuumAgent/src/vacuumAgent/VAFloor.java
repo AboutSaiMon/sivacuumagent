@@ -51,7 +51,7 @@ public class VAFloor {
 	 */
 	public VATile getTile(Point p) {
 
-		if (p.x > getSize() || p.y > getSize() || p.x < 0 || p.y < 0) {
+		if (p.x >= getSize() || p.y >= getSize() || p.x < 0 || p.y < 0) {
 			return new VATile(VATileStatus.BLOCK);
 		}
 
