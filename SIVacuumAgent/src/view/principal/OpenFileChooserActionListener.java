@@ -16,11 +16,11 @@ import vacuumAgent.environment.VAEnvironment;
 import view.EnvironmentDrawPanel.FloorPanel;
 import file.FileManager;
 
-public class OpenFileChooser implements ActionListener {	
+public class OpenFileChooserActionListener implements ActionListener {	
 	
 	Main frame;
 		
-	public OpenFileChooser( Main frame ) 
+	public OpenFileChooserActionListener( Main frame ) 
 	{
 		super();
 		this.frame = frame;
@@ -39,10 +39,8 @@ public class OpenFileChooser implements ActionListener {
 			if ( n == JFileChooser.APPROVE_OPTION ){
 				File f = fileChooser.getSelectedFile();
 				String path = f.getCanonicalPath();
-//				
-//				VAFloor loadedMap = FileManager.load( path );
-//				Point p = new Point( 0, 0 );				
-				VAEnvironment env= FileManager.load( path );
+				
+				VAEnvironment env = FileManager.load( path );
 				VAFloor loadedMap = env.getFloor();
 				Point p = env.getVacuumAgentPosition();			
 				
@@ -56,11 +54,14 @@ public class OpenFileChooser implements ActionListener {
 				frame.getGenerateRandomly().setEnabled( false );
 				frame.getLoad().setEnabled( false );
 				frame.getSave().setEnabled( true );
-				frame.getSave().addActionListener( new SaveFileChooser( frame ) );
+				frame.getSave().addActionListener( new SaveFileChooserActionListener( frame ) );
+				frame.getStart().setEnabled( true );
+				frame.getMoveOneStep().setEnabled( true );
 			}
 		}
 		catch ( Exception ex ) 
 		{
+			ex.printStackTrace();
 			JOptionPane.showMessageDialog( null, Constants.ERROR, Constants.ERROR, JOptionPane.ERROR_MESSAGE );
 		}
 	}

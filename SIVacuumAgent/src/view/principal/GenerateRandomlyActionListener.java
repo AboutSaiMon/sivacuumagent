@@ -14,7 +14,7 @@ import javax.swing.JTextField;
 
 import util.constants.Constants;
 
-public class GenerateRandomly implements ActionListener {
+public class GenerateRandomlyActionListener implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {

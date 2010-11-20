@@ -28,7 +28,7 @@ public class PrincipalPanel extends JPanel {
 		JButton generateMapRandomly = new JButton( Constants.GENERATERANDOMLY );
 		JButton generateMap = new JButton( Constants.GENERATEMAP );
 		
-		generateMapRandomly.addActionListener( new GenerateRandomly() );
+		generateMapRandomly.addActionListener( new GenerateRandomlyActionListener() );
 		generateMap.addActionListener( new GenerateMap( frame ) );			
 		
 		this.add( generateMapRandomly );

@@ -9,9 +9,11 @@ import javax.swing.JMenuItem;
 
 import util.constants.Constants;
 import vacuumAgent.VAFloor;
+import vacuumAgent.environment.VAEnvObservable;
+import vacuumAgent.environment.VAEnvironment;
 import view.principal.GenerateMap;
-import view.principal.GenerateRandomly;
-import view.principal.OpenFileChooser;
+import view.principal.GenerateRandomlyActionListener;
+import view.principal.OpenFileChooserActionListener;
 import view.principal.PrincipalPanel;
 
 public class Main extends JFrame{
@@ -25,20 +27,23 @@ public class Main extends JFrame{
 	JMenuItem save = new JMenuItem( Constants.SAVE );
 	JMenuItem generateRandomly = new JMenuItem( Constants.GENERATERANDOMLY );
 	JMenuItem generateMap = new JMenuItem( Constants.GENERATEMAP );
+	JMenuItem start = new JMenuItem( Constants.START );
+	JMenuItem moveOneStep = new JMenuItem( Constants.MOVEONESTEP );
 	
-	VAFloor floor = new VAFloor( 100 );
-	Point point = new Point( 0, 0 );
+	VAEnvironment environment;
 	
-	public Main() {
+	public Main( VAEnvironment environment ) {
 		// TODO Auto-generated constructor stub
 		super( Constants.TITLE );
+		
+		this.environment = environment;
 
 		PrincipalPanel panel = new PrincipalPanel( this );
 
 		JMenuBar menuBar = new JMenuBar();
 		JMenu file = new JMenu( "File" );
 		
-		load.addActionListener( new OpenFileChooser( this ) );
+		load.addActionListener( new OpenFileChooserActionListener( this ) );
 		save.setEnabled( false );
 		
 		file.add( load );
@@ -46,14 +51,23 @@ public class Main extends JFrame{
 
 		JMenu generate = new JMenu( "Generate" );
 				
-		generateRandomly.addActionListener( new GenerateRandomly() );
+		generateRandomly.addActionListener( new GenerateRandomlyActionListener() );
 		generateMap.addActionListener( new GenerateMap( this ) );
 		
 		generate.add( generateRandomly );
 		generate.add( generateMap );		
 
+		JMenu action = new JMenu( "Action" );
+		
+		start.setEnabled( false );
+		moveOneStep.setEnabled( false );
+		
+		action.add( start );
+		action.add( moveOneStep );
+		
 		menuBar.add( file );
 		menuBar.add( generate );
+		menuBar.add( action );
 		
 		this.setContentPane( panel );
 		this.setResizable( false );
@@ -97,20 +111,28 @@ public class Main extends JFrame{
 		this.generateMap = generateMap;
 	}
 
-	public VAFloor getFloor() {
-		return floor;
+	public VAEnvironment getEnvironment() {
+		return environment;
 	}
 
-	public void setFloor( VAFloor floor ) {
-		this.floor = floor;
+	public void setEnvironment( VAEnvironment environment ) {
+		this.environment = environment;
 	}
 
-	public Point getPoint() {
-		return point;
+	public JMenuItem getStart() {
+		return start;
 	}
 
-	public void setPoint( Point point ) {
-		this.point = point;
+	public void setStart( JMenuItem start ) {
+		this.start = start;
+	}
+
+	public JMenuItem getMoveOneStep() {
+		return moveOneStep;
+	}
+
+	public void setMoveOneStep( JMenuItem moveOneStep ) {
+		this.moveOneStep = moveOneStep;
 	}
 
 	/**
@@ -118,7 +140,12 @@ public class Main extends JFrame{
 	 */
 	public static void main( String[] args ) {
 		// TODO Auto-generated method stub
-		new Main();
+		VAFloor floor = new VAFloor( 100 );
+		Point point = new Point( 0, 0 );
+				
+		VAEnvObservable state = new VAEnvObservable( null, point, floor );
+		
+		new Main( state );
 	}
 
 }

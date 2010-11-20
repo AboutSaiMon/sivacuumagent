@@ -11,12 +11,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import exception.NegativeNumberException;
-
 import main.Main;
 import util.constants.Constants;
-import vacuumAgent.environment.VAEnvObservable;
+import vacuumAgent.environment.VAEnvironment;
 import view.EnvironmentDrawPanel.FloorPanel;
+import exception.NegativeNumberException;
 
 public class GenerateMap implements ActionListener {
 
@@ -64,19 +63,32 @@ public class GenerateMap implements ActionListener {
 					
 					if( tails <= 0 )
 						throw new NegativeNumberException( Constants.ERRORNEGATIVENUMBERS);
-					principalFrame.getFloor().setSize( tails );
+					
+					VAEnvironment environment = principalFrame.getEnvironment();
+					environment.getFloor().setSize( tails );
 					FloorPanel floorPanel;
 					
-					VAEnvObservable state = new VAEnvObservable( null, principalFrame.getPoint(), principalFrame.getFloor() );				
-					floorPanel = new FloorPanel( state );
+								
+					floorPanel = new FloorPanel( environment );
 					floorPanel.setEditable( true );
 					principalFrame.setSize( 800, 600 );
 					principalFrame.setContentPane( floorPanel );
+					
 					principalFrame.getGenerateMap().setEnabled( false );
+					
 					principalFrame.getGenerateRandomly().setEnabled( false );
+					
 					principalFrame.getLoad().setEnabled( false );
+					
 					principalFrame.getSave().setEnabled( true );
-					principalFrame.getSave().addActionListener( new SaveFileChooser( principalFrame ) );
+					principalFrame.getSave().addActionListener( new SaveFileChooserActionListener( principalFrame ) );
+					
+					principalFrame.getStart().setEnabled( true );
+					principalFrame.getStart().addActionListener( new StartActionListener( principalFrame, 0 ) );
+					
+					principalFrame.getMoveOneStep().setEnabled( true );
+					principalFrame.getMoveOneStep().addActionListener( new StartActionListener( principalFrame, 1 ) );
+					
 					frame.dispose();
 				}
 				catch( NumberFormatException ex )
