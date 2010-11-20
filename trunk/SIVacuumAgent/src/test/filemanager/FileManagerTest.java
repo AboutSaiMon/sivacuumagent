@@ -1,10 +1,9 @@
 package test.filemanager;
 
-import exception.FileManagerException;
-import file.FileManager;
-import vacuumAgent.VAFloor;
 import vacuumAgent.VATile;
 import vacuumAgent.environment.VAEnvironment;
+import exception.FileManagerException;
+import file.FileManager;
 
 
 public class FileManagerTest {
