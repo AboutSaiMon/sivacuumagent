@@ -1,6 +1,7 @@
 package main;
 
 import java.awt.Point;
+import java.util.Random;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -160,7 +161,7 @@ public class Main extends JFrame{
 			@Override
 			public boolean isAlive() {
 				// TODO Auto-generated method stub
-				return false;
+				return true;
 			}
 			
 			@Override
@@ -169,24 +170,46 @@ public class Main extends JFrame{
 				VAPercept p = (VAPercept) percept;
 				VATileStatus status = p.getCurrentTileStatus();
 				
-				VAAction a;
+				VAAction a = new VAAction(VAActionType.SUCK);
 				if( status == VATileStatus.DIRTY )
-				{
+				{					
 					a = new VAAction(VAActionType.SUCK);
 				}
 				else
 				{
-					if( p.getNeighborhood().eastIsFree() )
-						a = new VAAction(VAActionType.MOVEEAST);
-					else if( p.getNeighborhood().northIsFree() )
-						a = new VAAction(VAActionType.MOVENORTH);
-					else if( p.getNeighborhood().southIsFree())
-						a = new VAAction(VAActionType.MOVESOUTH);
-					else if( p.getNeighborhood().westIsFree())
-						a = new VAAction(VAActionType.MOVEWEST);
-					else
-						a = new VAAction(VAActionType.SUCK);
-				}
+					Random r = new Random();
+					int i = r.nextInt(4);
+					
+					switch( i )
+					{
+						case 0:						
+							if( p.getNeighborhood().eastIsFree() )
+							{
+								a = new VAAction(VAActionType.MOVEEAST);
+							}
+							break;
+						case 1:
+							if( p.getNeighborhood().northIsFree() )
+							{
+								a = new VAAction(VAActionType.MOVENORTH);
+							}
+							break;
+						case 2:
+							if( p.getNeighborhood().southIsFree())
+							{
+								a = new VAAction(VAActionType.MOVESOUTH);
+							}
+							break;
+						case 3:
+							if( p.getNeighborhood().westIsFree())
+							{
+								a = new VAAction(VAActionType.MOVEWEST);
+							}
+							break;
+						default:
+							break;
+					}
+				}				
 				return a;
 			}
 		};
@@ -195,5 +218,4 @@ public class Main extends JFrame{
 		
 		new Main( state );
 	}
-
 }

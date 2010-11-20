@@ -41,10 +41,14 @@ public class StartActionListener implements ActionListener, Runnable
 				while( !environment.isDone() )
 				{
 					environment.step( 1 );
+					frame.getContentPane().repaint();
 				}
 			}
 			else
+			{
 				environment.step( step );
+				frame.getContentPane().repaint();
+			}
 		} catch ( VAIllegalMove e ) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
