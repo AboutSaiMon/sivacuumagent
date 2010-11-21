@@ -1,6 +1,5 @@
 package view.principal;
 
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -10,8 +9,6 @@ import javax.swing.JOptionPane;
 
 import main.Main;
 import util.constants.Constants;
-import vacuumAgent.VAFloor;
-import vacuumAgent.environment.VAEnvObservable;
 import vacuumAgent.environment.VAEnvironment;
 import view.EnvironmentDrawPanel.FloorPanel;
 import file.FileManager;
@@ -36,12 +33,13 @@ public class OpenFileChooserActionListener implements ActionListener {
 				String path = f.getCanonicalPath();
 
 				VAEnvironment env = FileManager.load(path);
-				VAFloor loadedMap = env.getFloor();
-				Point p = env.getVacuumAgentPosition();
-
+				
+				frame.getEnvironment().setFloor( env.getFloor() );
+				frame.getEnvironment().setVacuumAgentPosition( env.getVacuumAgentPosition() );
+				
 				FloorPanel floorPanel;
-				VAEnvObservable state = new VAEnvObservable(null, p, loadedMap);
-				floorPanel = new FloorPanel(state);
+				floorPanel = new FloorPanel( frame.getEnvironment() );
+				
 				floorPanel.setEditable(false);
 				frame.setSize(800, 600);
 				frame.setContentPane(floorPanel);
@@ -52,7 +50,9 @@ public class OpenFileChooserActionListener implements ActionListener {
 				frame.getSave().addActionListener(
 						new SaveFileChooserActionListener(frame));
 				frame.getStart().setEnabled(true);
+				frame.getStart().addActionListener( new StartActionListener( frame, 0 ) );
 				frame.getMoveOneStep().setEnabled(true);
+				frame.getMoveOneStep().addActionListener( new StartActionListener( frame, 1 ) );
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
