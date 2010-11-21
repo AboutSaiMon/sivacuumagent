@@ -34,7 +34,7 @@ public class MapGenerator {
 	 *            ProgressiveCreation, 1 for CoinCreation or 2 for FullRandom
 	 * @return
 	 */
-	public VAFloor generateFloor(int size, float blockPercentage,
+	public static VAFloor generateFloor(int size, float blockPercentage,
 			float dirtyPercentage, boolean fullyReachable, int algorithm) {
 
 		int matrix[][] = new int[size][size];
@@ -66,15 +66,22 @@ public class MapGenerator {
 		dirtyCreation(matrix, dirtyPercentage);
 
 		VATile floor [][] = new VATile [size][size];
+		assert( size == matrix.length );
 
 		for (int i = 0; i < matrix.length; i++) {
 			for (int j = 0; j < matrix.length; j++) {
 				if (matrix[i][j] == 0)
-					floor[i][j].setStatus(VATileStatus.CLEAN);
+				{
+					floor[i][j] = new VATile( VATileStatus.CLEAN );					
+				}
 				else if (matrix[i][j] == 1)
-					floor[i][j].setStatus(VATileStatus.BLOCK);
+				{
+					floor[i][j] = new VATile( VATileStatus.BLOCK );
+				}
 				else if (matrix[i][j] == 2)
-					floor[i][j].setStatus(VATileStatus.DIRTY);
+				{
+					floor[i][j] = new VATile( VATileStatus.DIRTY );
+				}
 			}
 		}
 		VAFloor vaFloor = new VAFloor();
@@ -83,7 +90,7 @@ public class MapGenerator {
 	}
 
 
-	private void progressiveGenerator(int[][] matrix, int blocks) {
+	private static void progressiveGenerator(int[][] matrix, int blocks) {
 
 		int free = (matrix.length * matrix.length - blocks);
 		System.out.println("blocks: " + blocks + "\tfree: " + free);
@@ -144,7 +151,7 @@ public class MapGenerator {
 	 * @param matrix
 	 * @return
 	 */
-	private Point nextPoint(Point point, int[][] matrix) {
+	private static Point nextPoint(Point point, int[][] matrix) {
 		// chose a direction
 		int dir = (int) (Math.random() * 10) % 4;
 		int attempts = 0;
@@ -198,7 +205,7 @@ public class MapGenerator {
 		return null;
 	}
 
-	private void coinCreation(int[][] matrix, float percentage) {
+	private static void coinCreation(int[][] matrix, float percentage) {
 		float coin;
 		int cont = 0;
 		for (int i = 0; i < matrix.length; i++) {
@@ -215,7 +222,7 @@ public class MapGenerator {
 
 	}
 
-	private void fullRandom(int[][] matrix, int blocks) {
+	private static void fullRandom(int[][] matrix, int blocks) {
 		int setted = 0;
 		int exp = ((int) Math.log10(matrix.length)) + 1;
 		exp = (int) (Math.pow(10.0, (double) exp));
@@ -250,7 +257,7 @@ public class MapGenerator {
 
 	}
 
-	private void dirtyCreation(int[][] matrix, float percentage) {
+	private static void dirtyCreation(int[][] matrix, float percentage) {
 		float coin;
 		int cont = 0;
 
@@ -272,7 +279,7 @@ public class MapGenerator {
 	 * Method for making reachable all areas of the floor.
 	 * @param matrix
 	 */
-	private void makeAllReachable(int[][] matrix) {
+	private static void makeAllReachable(int[][] matrix) {
 		int matrixTmp [][] = new int [matrix.length][matrix.length];
 		for (int i = 0; i < matrix.length; i++) {
 			for (int j = 0; j < matrix.length; j++) {
