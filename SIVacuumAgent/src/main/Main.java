@@ -58,7 +58,7 @@ public class Main extends JFrame{
 
 		JMenu generate = new JMenu( "Generate" );
 				
-		generateRandomly.addActionListener( new GenerateRandomlyActionListener() );
+		generateRandomly.addActionListener( new GenerateRandomlyActionListener( this ) );
 		generateMap.addActionListener( new GenerateMap( this ) );
 		
 		generate.add( generateRandomly );

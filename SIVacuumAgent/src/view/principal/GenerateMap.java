@@ -31,6 +31,7 @@ public class GenerateMap implements ActionListener {
 
 	@Override 
 	public void actionPerformed(ActionEvent arg0) {
+		
 		final JFrame frame = new JFrame( Constants.TITLE );
 		frame.setResizable( false);
 		frame.setVisible( true );
@@ -64,7 +65,8 @@ public class GenerateMap implements ActionListener {
 						throw new NegativeNumberException( Constants.ERRORNEGATIVENUMBERS);
 					
 					VAEnvironment environment = principalFrame.getEnvironment();
-					environment.setFloor(new VAFloor(tails));
+					environment.setFloor( new VAFloor( tails ) );
+					
 					FloorPanel floorPanel;
 					
 								
