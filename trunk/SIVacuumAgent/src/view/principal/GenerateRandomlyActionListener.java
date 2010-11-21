@@ -64,7 +64,7 @@ public class GenerateRandomlyActionListener implements ActionListener {
 		wallPercent.setToolTipText( Constants.TOOLTIPWALLPERCENT );
 		panel.add( wallPercent );
 		
-		JLabel algorithmTypeLabel = new JLabel( Constants.WALLPERCENT );
+		JLabel algorithmTypeLabel = new JLabel( Constants.ALGORITHMTYPE );
 		panel.add( algorithmTypeLabel );				
 		
 		final JTextField algorithmType = new JTextField("2");

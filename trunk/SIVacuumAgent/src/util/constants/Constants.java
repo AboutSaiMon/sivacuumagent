@@ -1,6 +1,7 @@
 package util.constants;
 
 public class Constants {
+	public static String ALGORITHMTYPE = "Algorithm Type";
 	public static String DUSTPERCENT = "Dust Percent";
 	public static String ERROR = "Error";
 	public static String ERRORONGENERATORMAPRANDOMLY = "Error on generator map.";
