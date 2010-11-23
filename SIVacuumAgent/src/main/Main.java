@@ -10,6 +10,7 @@ import javax.swing.JMenuItem;
 
 import util.constants.Constants;
 import vacuumAgent.VAAction;
+import vacuumAgent.VAAgent;
 import vacuumAgent.VAPercept;
 import vacuumAgent.VAAction.VAActionType;
 import vacuumAgent.VATile.VATileStatus;
@@ -20,7 +21,6 @@ import view.principal.GenerateRandomlyActionListener;
 import view.principal.OpenFileChooserActionListener;
 import view.principal.PrincipalPanel;
 import framework.Action;
-import framework.Agent;
 import framework.Percept;
 
 public class Main extends JFrame{
@@ -146,7 +146,7 @@ public class Main extends JFrame{
 	 */
 	public static void main( String[] args ) {
 		Point point = new Point( 0, 0 );
-		Agent a = new Agent() {
+		VAAgent a = new VAAgent(10) {
 			
 			@Override
 			public void setAlive(boolean alive) {

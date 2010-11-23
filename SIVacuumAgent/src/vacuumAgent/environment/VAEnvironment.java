@@ -3,6 +3,7 @@ package vacuumAgent.environment;
 import java.awt.Point;
 
 import vacuumAgent.VAAction;
+import vacuumAgent.VAAgent;
 import vacuumAgent.VAFloor;
 import vacuumAgent.VANeighborhood;
 import vacuumAgent.VAPercept;
@@ -19,7 +20,7 @@ import framework.Environment;
  */
 public abstract class VAEnvironment implements Environment {
 
-	protected Agent vacuumAgent;
+	protected VAAgent vacuumAgent;
 	protected Point vacuumAgentPosition;
 	protected VAFloor floor;
 
@@ -34,7 +35,7 @@ public abstract class VAEnvironment implements Environment {
 	 * @param floor
 	 * 				Indicates the floor that will be cleaned by the agent
 	 */
-	public VAEnvironment(Agent vacuumAgent, Point vacuumAgentPosition,
+	public VAEnvironment(VAAgent vacuumAgent, Point vacuumAgentPosition,
 			VAFloor floor) {
 		super();
 		this.vacuumAgent = vacuumAgent;
@@ -83,7 +84,7 @@ public abstract class VAEnvironment implements Environment {
 	 *
 	 * @return the vacuum agent
 	 */
-	public Agent getVacuumAgent() {
+	public VAAgent getVacuumAgent() {
 		return vacuumAgent;
 	}
 
@@ -92,7 +93,7 @@ public abstract class VAEnvironment implements Environment {
 	 *
 	 * @param vacuumAgent the new vacuum agent
 	 */
-	public void setVacuumAgent(Agent vacuumAgent) {
+	public void setVacuumAgent(VAAgent vacuumAgent) {
 		this.vacuumAgent = vacuumAgent;
 	}
 
