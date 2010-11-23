@@ -2,6 +2,7 @@ package vacuumAgent.environment;
 
 import java.awt.Point;
 
+import sun.management.resources.agent;
 import vacuumAgent.VAAction;
 import vacuumAgent.VAAgent;
 import vacuumAgent.VAFloor;
@@ -144,6 +145,7 @@ public abstract class VAEnvironment implements Environment {
 			}
 			vacuumAgentPosition.y++;
 		}
+		vacuumAgent.spendEnergy();
 	}
 
 	/**
@@ -179,7 +181,9 @@ public abstract class VAEnvironment implements Environment {
 	 */
 	@Override
 	public boolean isDone() {
-		// TODO GIOVEDI
+		if(vacuumAgent.getEnergy() <= 0 || !vacuumAgent.isAlive()){
+			return true;
+		}
 		return false;
 	}
 
