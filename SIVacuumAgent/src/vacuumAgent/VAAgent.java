@@ -33,21 +33,12 @@ public abstract class VAAgent implements Agent{
 
 
 	@Override
-	public Action execute(Percept percept) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public abstract Action execute(Percept percept);	
 
 	@Override
-	public boolean isAlive() {
-		// TODO Auto-generated method stub
-		return false;
-	}
+	public abstract boolean isAlive();
 
 	@Override
-	public void setAlive(boolean alive) {
-		// TODO Auto-generated method stub
-		
-	}
+	public abstract void setAlive(boolean alive);
 
 }
