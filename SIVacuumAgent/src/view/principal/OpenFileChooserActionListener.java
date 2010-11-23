@@ -43,8 +43,8 @@ public class OpenFileChooserActionListener implements ActionListener {
 				floorPanel.setEditable(false);
 				frame.setSize(800, 600);
 				frame.setContentPane(floorPanel);
-				frame.getGenerateMap().setEnabled(false);
-				frame.getGenerateRandomly().setEnabled(false);
+				frame.getGenerateMap().setEnabled( false );
+				frame.getGenerateRandomly().setEnabled( false );
 				frame.getLoad().setEnabled(false);
 				frame.getSave().setEnabled(true);
 				frame.getSave().addActionListener(
@@ -53,6 +53,7 @@ public class OpenFileChooserActionListener implements ActionListener {
 				frame.getStart().addActionListener( new StartActionListener( frame, 0 ) );
 				frame.getMoveOneStep().setEnabled(true);
 				frame.getMoveOneStep().addActionListener( new StartActionListener( frame, 1 ) );
+				frame.setResizable( true );
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();

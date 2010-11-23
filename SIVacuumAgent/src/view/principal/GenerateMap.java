@@ -90,6 +90,8 @@ public class GenerateMap implements ActionListener {
 					principalFrame.getMoveOneStep().setEnabled( true );
 					principalFrame.getMoveOneStep().addActionListener( new StartActionListener( principalFrame, 1 ) );
 					
+					principalFrame.setResizable( true );
+					
 					frame.dispose();
 				}
 				catch( NumberFormatException ex )
