@@ -7,10 +7,12 @@ import framework.Percept;
 public abstract class VAAgent implements Agent{
 	
 	protected int energy;
+	boolean alive;
 	
 	public VAAgent(int energy) {
 		super();
 		this.energy = energy;
+		this.alive = true;
 	}
 	
 	
@@ -36,9 +38,13 @@ public abstract class VAAgent implements Agent{
 	public abstract Action execute(Percept percept);	
 
 	@Override
-	public abstract boolean isAlive();
+	public boolean isAlive(){
+		return this.alive;
+	}
 
 	@Override
-	public abstract void setAlive(boolean alive);
+	public void setAlive(boolean alive){
+		this.alive = alive;
+	}
 
 }

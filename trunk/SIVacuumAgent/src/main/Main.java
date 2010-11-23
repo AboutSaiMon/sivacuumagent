@@ -147,19 +147,6 @@ public class Main extends JFrame{
 	public static void main( String[] args ) {
 		Point point = new Point( 0, 0 );
 		VAAgent a = new VAAgent(10) {
-			
-			@Override
-			public void setAlive(boolean alive) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public boolean isAlive() {
-				// TODO Auto-generated method stub
-				return true;
-			}
-			
 			@Override
 			public Action execute(Percept percept) {
 				// TODO Auto-generated method stub
