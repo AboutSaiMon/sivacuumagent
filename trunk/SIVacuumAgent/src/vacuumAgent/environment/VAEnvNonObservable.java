@@ -2,11 +2,11 @@ package vacuumAgent.environment;
 
 import java.awt.Point;
 
+import vacuumAgent.VAAgent;
 import vacuumAgent.VAFloor;
 import vacuumAgent.VANeighborhood;
 import vacuumAgent.VAPercept;
 import vacuumAgent.VATile.VATileStatus;
-import framework.Agent;
 
 /**
  * The Class VAEnvNonObservable.
@@ -25,7 +25,7 @@ public class VAEnvNonObservable extends VAEnvironment {
 	 * @param floor
 	 * 				Indicates the floor that will be cleaned by the agent
 	 */
-	public VAEnvNonObservable(Agent vacuumAgent, Point vacuumAgentPosition, VAFloor floor) {
+	public VAEnvNonObservable(VAAgent vacuumAgent, Point vacuumAgentPosition, VAFloor floor) {
 		super(vacuumAgent, vacuumAgentPosition, floor);
 	}
 

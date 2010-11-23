@@ -2,7 +2,7 @@ package vacuumAgent.environment;
 
 import java.awt.Point;
 
-import framework.Agent;
+import vacuumAgent.VAAgent;
 import vacuumAgent.VAFloor;
 import vacuumAgent.VANeighborhood;
 import vacuumAgent.VAPercept;
@@ -24,7 +24,7 @@ public class VAEnvSemiObservable extends VAEnvironment {
 	 * @param floor
 	 * 				Indicates the floor that will be cleaned by the agent
 	 */
-	public VAEnvSemiObservable(Agent vacuumAgent, Point vacuumAgentPosition,
+	public VAEnvSemiObservable(VAAgent vacuumAgent, Point vacuumAgentPosition,
 			VAFloor floor) {
 		super(vacuumAgent, vacuumAgentPosition, floor);
 	}
