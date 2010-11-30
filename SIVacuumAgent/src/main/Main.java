@@ -1,12 +1,15 @@
 package main;
 
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Random;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 import util.constants.Constants;
 import vacuumAgent.VAAction;
@@ -16,6 +19,7 @@ import vacuumAgent.VAAction.VAActionType;
 import vacuumAgent.VATile.VATileStatus;
 import vacuumAgent.environment.VAEnvObservable;
 import vacuumAgent.environment.VAEnvironment;
+import view.principal.DefineAgentActionListener;
 import view.principal.GenerateMap;
 import view.principal.GenerateRandomlyActionListener;
 import view.principal.OpenFileChooserActionListener;
@@ -34,8 +38,10 @@ public class Main extends JFrame{
 	JMenuItem save = new JMenuItem( Constants.SAVE );
 	JMenuItem generateRandomly = new JMenuItem( Constants.GENERATERANDOMLY );
 	JMenuItem generateMap = new JMenuItem( Constants.GENERATEMAP );
+	JMenuItem defineAgent = new JMenuItem( Constants.DEFINEAGENT );
 	JMenuItem start = new JMenuItem( Constants.START );
 	JMenuItem moveOneStep = new JMenuItem( Constants.MOVEONESTEP );
+	JMenuItem help = new JMenuItem( Constants.HELP );
 	
 	VAEnvironment environment;
 	
@@ -62,7 +68,12 @@ public class Main extends JFrame{
 		generateMap.addActionListener( new GenerateMap( this ) );
 		
 		generate.add( generateRandomly );
-		generate.add( generateMap );		
+		generate.add( generateMap );
+		
+		JMenu agent = new JMenu( "Agent" );
+		
+		defineAgent.addActionListener( new DefineAgentActionListener( this ) );
+		agent.add( defineAgent );
 
 		JMenu action = new JMenu( "Action" );
 		
@@ -72,9 +83,23 @@ public class Main extends JFrame{
 		action.add( start );
 		action.add( moveOneStep );
 		
+		JMenu about = new JMenu( "About" );		
+		about.add( help );
+		
+		help.addActionListener( new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				JOptionPane.showMessageDialog( null, Constants.INFORMATION, Constants.HELP, JOptionPane.INFORMATION_MESSAGE );
+			}
+		});
+		
 		menuBar.add( file );
 		menuBar.add( generate );
+		menuBar.add( agent );
 		menuBar.add( action );
+		menuBar.add( about );
 		this.setContentPane( panel );
 		this.setResizable( false );
 		this.setVisible( true );
@@ -140,13 +165,22 @@ public class Main extends JFrame{
 	public void setMoveOneStep( JMenuItem moveOneStep ) {
 		this.moveOneStep = moveOneStep;
 	}
+	
+	public JMenuItem getDefineAgent() {
+		return defineAgent;
+	}
+
+	public void setDefineAgent( JMenuItem defineAgent ) {
+		this.defineAgent = defineAgent;
+	}
 
 	/**
 	 * @param args
 	 */
 	public static void main( String[] args ) {
 		Point point = new Point( 0, 0 );
-		VAAgent a = new VAAgent(10) {
+		
+		VAAgent a = new VAAgent(500) {
 			@Override
 			public Action execute(Percept percept) {
 				// TODO Auto-generated method stub

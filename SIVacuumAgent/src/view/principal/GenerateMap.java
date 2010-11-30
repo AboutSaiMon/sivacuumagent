@@ -13,6 +13,7 @@ import javax.swing.JTextField;
 
 import main.Main;
 import util.constants.Constants;
+import util.utility.EnableDisableButtons;
 import vacuumAgent.VAFloor;
 import vacuumAgent.environment.VAEnvironment;
 import view.EnvironmentDrawPanel.FloorPanel;
@@ -75,22 +76,7 @@ public class GenerateMap implements ActionListener {
 					principalFrame.setSize( 800, 600 );
 					principalFrame.setContentPane( floorPanel );
 					
-					principalFrame.getGenerateMap().setEnabled( false );
-					
-					principalFrame.getGenerateRandomly().setEnabled( false );
-					
-					principalFrame.getLoad().setEnabled( false );
-					
-					principalFrame.getSave().setEnabled( true );
-					principalFrame.getSave().addActionListener( new SaveFileChooserActionListener( principalFrame ) );
-					
-					principalFrame.getStart().setEnabled( true );
-					principalFrame.getStart().addActionListener( new StartActionListener( principalFrame, 0 ) );
-					
-					principalFrame.getMoveOneStep().setEnabled( true );
-					principalFrame.getMoveOneStep().addActionListener( new StartActionListener( principalFrame, 1 ) );
-					
-					principalFrame.setResizable( true );
+					EnableDisableButtons.enableDisableButtons( principalFrame );
 					
 					frame.dispose();
 				}
