@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -15,6 +16,7 @@ import javax.swing.JTextField;
 import main.Main;
 import mapGenerator.MapGenerator;
 import util.constants.Constants;
+import util.utility.EnableDisableButtons;
 import vacuumAgent.VAFloor;
 import vacuumAgent.VATile.VATileStatus;
 import view.EnvironmentDrawPanel.FloorPanel;
@@ -36,7 +38,7 @@ public class GenerateRandomlyActionListener implements ActionListener {
 		frame.setResizable( false);
 		frame.setVisible( true );
 		frame.setDefaultCloseOperation( JFrame.DISPOSE_ON_CLOSE );
-		frame.setSize( 230, 150 );
+		frame.setSize( 270, 150 );
 		frame.setLocation( 300, 300 );
 		
 		JPanel panel = new JPanel();
@@ -67,8 +69,10 @@ public class GenerateRandomlyActionListener implements ActionListener {
 		JLabel algorithmTypeLabel = new JLabel( Constants.ALGORITHMTYPE );
 		panel.add( algorithmTypeLabel );				
 		
-		final JTextField algorithmType = new JTextField("2");
-		algorithmType.setToolTipText( Constants.TOOLTIPALGORITHMTYPE );
+		final JComboBox algorithmType = new JComboBox();
+		algorithmType.addItem( "ProgressiveCreation" );
+		algorithmType.addItem( "CoinCreation" );
+		algorithmType.addItem( "FullRandom" );
 		panel.add( algorithmType );
 		
 		JButton generate = new JButton( Constants.GENERATE );
@@ -79,14 +83,13 @@ public class GenerateRandomlyActionListener implements ActionListener {
 				// TODO Auto-generated method stub
 				String tailsNumberText = tailsNumber.getText();
 				String dustPercentText = dustPercent.getText();
-				String wallPercentText = wallPercent.getText();
-				String algorithmTypeText = algorithmType.getText();
+				String wallPercentText = wallPercent.getText();				
 				try
 				{
 					int tails = Integer.parseInt( tailsNumberText );					
 					float dust = Float.parseFloat( dustPercentText );
 					float wall = Float.parseFloat( wallPercentText );
-					int type = Integer.parseInt( algorithmTypeText );
+					int type = algorithmType.getSelectedIndex();
 					
 					if( dust > 60 || dust < 0 || wall < 0 || wall > 40 || tails <= 0 || tails > 1000 || dust+wall > 100 || type < 0 || type > 2 )
 					{						
@@ -116,22 +119,7 @@ public class GenerateRandomlyActionListener implements ActionListener {
 					principalFrame.setSize( 800, 600 );
 					principalFrame.setContentPane( floorPanel );
 					
-					principalFrame.getGenerateMap().setEnabled( false );
-					
-					principalFrame.getGenerateRandomly().setEnabled( false );
-					
-					principalFrame.getLoad().setEnabled( false );
-					
-					principalFrame.getSave().setEnabled( true );
-					principalFrame.getSave().addActionListener( new SaveFileChooserActionListener( principalFrame ) );
-					
-					principalFrame.getStart().setEnabled( true );
-					principalFrame.getStart().addActionListener( new StartActionListener( principalFrame, 0 ) );
-					
-					principalFrame.getMoveOneStep().setEnabled( true );
-					principalFrame.getMoveOneStep().addActionListener( new StartActionListener( principalFrame, 1 ) );
-
-					principalFrame.setResizable( true );
+					EnableDisableButtons.enableDisableButtons( principalFrame );
 					
 					frame.dispose();					
 				}
