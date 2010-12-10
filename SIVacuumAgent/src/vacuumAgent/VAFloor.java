@@ -1,6 +1,12 @@
 package vacuumAgent;
 
 import java.awt.Point;
+import java.util.List;
+
+import org.jgrapht.alg.DijkstraShortestPath;
+import org.jgrapht.graph.DefaultWeightedEdge;
+import org.jgrapht.graph.SimpleDirectedWeightedGraph;
+import org.jgrapht.traverse.DepthFirstIterator;
 
 import vacuumAgent.VATile.VATileStatus;
 
@@ -100,5 +106,59 @@ public class VAFloor {
 	// this.size = size;
 	//
 	// }
+	
+	
+	public int countReachable(){
+		int cont = 0;
+		int size = this.getSize();
+		
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < size; j++) {
+				if(this.getTile(new Point(i,j)).getStatus() == VATileStatus.CLEAN){
+					cont++;
+				}
+				if(this.getTile(new Point(i,j)).getStatus() == VATileStatus.DIRTY){
+					cont++;
+				}
+			}
+		}
+		return cont;
+	}
+	
+	public int countClean(){
+		int cont = 0;
+		int size = this.getSize();
+		
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < size; j++) {
+				if(this.getTile(new Point(i,j)).getStatus() == VATileStatus.CLEAN){
+					cont++;
+				}
+			}
+		}
+		return cont;
+	}
+	
+	public int distanceBetween(Point p1, Point p2){
+		SimpleDirectedWeightedGraph<Point, DefaultWeightedEdge> graph = VAConvertToGraph.toGraph(this);
+		
+//		DepthFirstIterator<Point, DefaultWeightedEdge> iter = new DepthFirstIterator<Point, DefaultWeightedEdge>(
+//				graph);
+//		Point vertex;
+//		while (iter.hasNext()) {
+//			vertex = iter.next();
+//			System.out.println("Vertex " + vertex.toString()
+//					+ " is connected to: "
+//					+ graph.edgesOf(vertex).toString());
+//		}
+
+		
+		
+		List<DefaultWeightedEdge> edgeList = DijkstraShortestPath.findPathBetween(graph, p1, p2);
+		return edgeList.size();
+	}
+	
+	
+	
 
 }

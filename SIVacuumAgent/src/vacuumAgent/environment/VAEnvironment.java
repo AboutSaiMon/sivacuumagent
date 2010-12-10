@@ -23,6 +23,8 @@ public abstract class VAEnvironment implements Environment {
 	protected VAAgent vacuumAgent;
 	protected Point vacuumAgentPosition;
 	protected VAFloor floor;
+	protected int stepCount;
+	protected Point startPosition;
 
 	
 	/**
@@ -41,6 +43,7 @@ public abstract class VAEnvironment implements Environment {
 		this.vacuumAgent = vacuumAgent;
 		this.vacuumAgentPosition = vacuumAgentPosition;
 		this.floor = floor;
+		this.stepCount = 0;
 	}
 	
 	/**
@@ -118,38 +121,52 @@ public abstract class VAEnvironment implements Environment {
 			return;
 		}
 		
+		if(stepCount == 0){
+			this.startPosition = new Point(vacuumAgentPosition.x, vacuumAgentPosition.y);
+		}
+		
 		VAPercept percept = this.genPerception();
 		VAAction action = (VAAction) vacuumAgent.execute(percept);
 		VANeighborhood neighborhood = this.getNeighborhood(vacuumAgentPosition);
 
+		
+		
+		
 		if (action.getActionType() == VAActionType.SUCK) {
 			floor.getTile(vacuumAgentPosition).setStatus(VATileStatus.CLEAN);
+			vacuumAgent.spendEnergy();
 		}
 		if (action.getActionType() == VAActionType.MOVENORTH) {
 			if (!neighborhood.northIsFree()) {
 				throw new VAIllegalMove("Illegal Move!");
 			}
 			vacuumAgentPosition.x++;
+			vacuumAgent.spendEnergy();
 		}
 		if (action.getActionType() == VAActionType.MOVESOUTH) {
 			if (!neighborhood.southIsFree()) {
 				throw new VAIllegalMove("Illegal Move!");
 			}
 			vacuumAgentPosition.x--;
+			vacuumAgent.spendEnergy();
 		}
 		if (action.getActionType() == VAActionType.MOVEWEST) {
 			if (!neighborhood.westIsFree()) {
 				throw new VAIllegalMove("Illegal Move!");
 			}
 			vacuumAgentPosition.y--;
+			vacuumAgent.spendEnergy();
 		}
 		if (action.getActionType() == VAActionType.MOVEEAST) {
 			if (!neighborhood.eastIsFree()) {
 				throw new VAIllegalMove("Illegal Move!");
 			}
 			vacuumAgentPosition.y++;
+			vacuumAgent.spendEnergy();
 		}
-		vacuumAgent.spendEnergy();
+		this.stepCount++;
+		System.out.println("MISURA DI PRESTAZIONE >>>> "+this.getPerformanceMeasure(this.vacuumAgent));
+
 	}
 
 	/**
@@ -196,8 +213,23 @@ public abstract class VAEnvironment implements Environment {
 	 */
 	@Override
 	public double getPerformanceMeasure(Agent forAgent) {
-		// TODO GIOVEDI
-		return 0;
+		int clean = floor.countClean();
+		System.out.println("Clean ->"+clean);
+		int reachable = floor.countReachable();
+		System.out.println("Reachable ->"+reachable);
+		System.out.println(vacuumAgentPosition);
+		System.out.println(startPosition);
+		int distanceFromStart = floor.distanceBetween(vacuumAgentPosition, startPosition);
+		System.out.println("distanceFromStart->"+distanceFromStart);
+		
+		double p1 = Math.pow(clean, 5) / Math.pow(reachable, 5);
+		System.out.println("p1->"+p1);
+		double p2 = Math.log10(distanceFromStart / (Math.sqrt(reachable)*2) + 1)/2;
+		System.out.println("p2->"+p2);
+		double p3 = Math.log10(stepCount / (reachable*3) + 1)/3;
+		System.out.println("p3->"+p3);
+			
+		return p1/(1+p2+p3);
 	}
 
 	/**
