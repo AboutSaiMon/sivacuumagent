@@ -63,6 +63,7 @@ public class FloorPanel extends JPanel{
 			toolbar.setVisible(false);
 			drawPanel.removeMouseListener(drawPanel);
 			drawPanel.removeMouseMotionListener(drawPanel);
+			drawPanel.setElementToAdd(null);
 		}
 	}
 	
