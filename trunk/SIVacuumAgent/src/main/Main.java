@@ -11,13 +11,19 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
+import SolutionThree.VAagentThree;
+import SolutionTwo.VAagentTwo;
+
+import solutionOne.robot.VAagetnOneJGraphT;
 import util.constants.Constants;
 import vacuumAgent.VAAction;
 import vacuumAgent.VAAgent;
 import vacuumAgent.VAPercept;
 import vacuumAgent.VAAction.VAActionType;
 import vacuumAgent.VATile.VATileStatus;
+import vacuumAgent.environment.VAEnvNonObservable;
 import vacuumAgent.environment.VAEnvObservable;
+import vacuumAgent.environment.VAEnvSemiObservable;
 import vacuumAgent.environment.VAEnvironment;
 import view.principal.DefineAgentActionListener;
 import view.principal.GenerateMap;
@@ -27,94 +33,96 @@ import view.principal.PrincipalPanel;
 import framework.Action;
 import framework.Percept;
 
-public class Main extends JFrame{
+public class Main extends JFrame {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	JMenuItem load = new JMenuItem( Constants.OPEN );
-	JMenuItem save = new JMenuItem( Constants.SAVE );
-	JMenuItem generateRandomly = new JMenuItem( Constants.GENERATERANDOMLY );
-	JMenuItem generateMap = new JMenuItem( Constants.GENERATEMAP );
-	JMenuItem defineAgent = new JMenuItem( Constants.DEFINEAGENT );
-	JMenuItem start = new JMenuItem( Constants.START );
-	JMenuItem moveOneStep = new JMenuItem( Constants.MOVEONESTEP );
-	JMenuItem help = new JMenuItem( Constants.HELP );
-	
+
+	JMenuItem load = new JMenuItem(Constants.OPEN);
+	JMenuItem save = new JMenuItem(Constants.SAVE);
+	JMenuItem generateRandomly = new JMenuItem(Constants.GENERATERANDOMLY);
+	JMenuItem generateMap = new JMenuItem(Constants.GENERATEMAP);
+	JMenuItem defineAgent = new JMenuItem(Constants.DEFINEAGENT);
+	JMenuItem start = new JMenuItem(Constants.START);
+	JMenuItem moveOneStep = new JMenuItem(Constants.MOVEONESTEP);
+	JMenuItem help = new JMenuItem(Constants.HELP);
+
 	VAEnvironment environment;
-	
-	public Main( VAEnvironment environment ) {
+
+	public Main(VAEnvironment environment) {
 		// TODO Auto-generated constructor stub
-		super( Constants.TITLE );
-		
+		super(Constants.TITLE);
+
 		this.environment = environment;
 
-		PrincipalPanel panel = new PrincipalPanel( this );
+		PrincipalPanel panel = new PrincipalPanel(this);
 
 		JMenuBar menuBar = new JMenuBar();
-		JMenu file = new JMenu( "File" );
-		
-		load.addActionListener( new OpenFileChooserActionListener( this ) );
-		save.setEnabled( false );
-		
-		file.add( load );
-		file.add( save );
+		JMenu file = new JMenu("File");
 
-		JMenu generate = new JMenu( "Generate" );
-				
-		generateRandomly.addActionListener( new GenerateRandomlyActionListener( this ) );
-		generateMap.addActionListener( new GenerateMap( this ) );
-		
-		generate.add( generateRandomly );
-		generate.add( generateMap );
-		
-		JMenu agent = new JMenu( "Agent" );
-		
-		defineAgent.addActionListener( new DefineAgentActionListener( this ) );
-		agent.add( defineAgent );
+		load.addActionListener(new OpenFileChooserActionListener(this));
+		save.setEnabled(false);
 
-		JMenu action = new JMenu( "Action" );
-		
-		start.setEnabled( false );
-		moveOneStep.setEnabled( false );
-		
-		action.add( start );
-		action.add( moveOneStep );
-		
-		JMenu about = new JMenu( "About" );		
-		about.add( help );
-		
-		help.addActionListener( new ActionListener() {
-			
+		file.add(load);
+		file.add(save);
+
+		JMenu generate = new JMenu("Generate");
+
+		generateRandomly.addActionListener(new GenerateRandomlyActionListener(
+				this));
+		generateMap.addActionListener(new GenerateMap(this));
+
+		generate.add(generateRandomly);
+		generate.add(generateMap);
+
+		JMenu agent = new JMenu("Agent");
+
+		defineAgent.addActionListener(new DefineAgentActionListener(this));
+		agent.add(defineAgent);
+
+		JMenu action = new JMenu("Action");
+
+		start.setEnabled(false);
+		moveOneStep.setEnabled(false);
+
+		action.add(start);
+		action.add(moveOneStep);
+
+		JMenu about = new JMenu("About");
+		about.add(help);
+
+		help.addActionListener(new ActionListener() {
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				JOptionPane.showMessageDialog( null, Constants.INFORMATION, Constants.HELP, JOptionPane.INFORMATION_MESSAGE );
+				JOptionPane.showMessageDialog(null, Constants.INFORMATION,
+						Constants.HELP, JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
-		
-		menuBar.add( file );
-		menuBar.add( generate );
-		menuBar.add( agent );
-		menuBar.add( action );
-		menuBar.add( about );
-		this.setContentPane( panel );
-		this.setResizable( false );
-		this.setVisible( true );
-		this.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
 
-		this.setJMenuBar( menuBar );
-		this.setSize( 300, 200 );		
-		this.setLocation( 300, 300 );
+		menuBar.add(file);
+		menuBar.add(generate);
+		menuBar.add(agent);
+		menuBar.add(action);
+		menuBar.add(about);
+		this.setContentPane(panel);
+		this.setResizable(false);
+		this.setVisible(true);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		this.setJMenuBar(menuBar);
+		this.setSize(300, 200);
+		this.setLocation(300, 300);
 	}
-	
+
 	public JMenuItem getLoad() {
 		return load;
 	}
 
-	public void setLoad( JMenuItem load ) {
+	public void setLoad(JMenuItem load) {
 		this.load = load;
 	}
 
@@ -122,7 +130,7 @@ public class Main extends JFrame{
 		return save;
 	}
 
-	public void setSave( JMenuItem save ) {
+	public void setSave(JMenuItem save) {
 		this.save = save;
 	}
 
@@ -130,7 +138,7 @@ public class Main extends JFrame{
 		return generateRandomly;
 	}
 
-	public void setGenerateRandomly( JMenuItem generateRandomly ) {
+	public void setGenerateRandomly(JMenuItem generateRandomly) {
 		this.generateRandomly = generateRandomly;
 	}
 
@@ -138,7 +146,7 @@ public class Main extends JFrame{
 		return generateMap;
 	}
 
-	public void setGenerateMap( JMenuItem generateMap ) {
+	public void setGenerateMap(JMenuItem generateMap) {
 		this.generateMap = generateMap;
 	}
 
@@ -146,7 +154,7 @@ public class Main extends JFrame{
 		return environment;
 	}
 
-	public void setEnvironment( VAEnvironment environment ) {
+	public void setEnvironment(VAEnvironment environment) {
 		this.environment = environment;
 	}
 
@@ -154,7 +162,7 @@ public class Main extends JFrame{
 		return start;
 	}
 
-	public void setStart( JMenuItem start ) {
+	public void setStart(JMenuItem start) {
 		this.start = start;
 	}
 
@@ -162,77 +170,54 @@ public class Main extends JFrame{
 		return moveOneStep;
 	}
 
-	public void setMoveOneStep( JMenuItem moveOneStep ) {
+	public void setMoveOneStep(JMenuItem moveOneStep) {
 		this.moveOneStep = moveOneStep;
 	}
-	
+
 	public JMenuItem getDefineAgent() {
 		return defineAgent;
 	}
 
-	public void setDefineAgent( JMenuItem defineAgent ) {
+	public void setDefineAgent(JMenuItem defineAgent) {
 		this.defineAgent = defineAgent;
 	}
 
 	/**
 	 * @param args
 	 */
-	public static void main( String[] args ) {
-		Point point = new Point( 0, 0 );
-		
-		VAAgent a = new VAAgent(500) {
-			@Override
-			public Action execute(Percept percept) {
-				// TODO Auto-generated method stub
-				VAPercept p = (VAPercept) percept;
-				VATileStatus status = p.getCurrentTileStatus();
-				
-				VAAction a = new VAAction(VAActionType.SUCK);
-				if( status == VATileStatus.DIRTY )
-				{					
-					a = new VAAction(VAActionType.SUCK);
-				}
-				else
-				{
-					Random r = new Random();
-					int i = r.nextInt(4);
-					
-					switch( i )
-					{
-						case 0:						
-							if( p.getNeighborhood().eastIsFree() )
-							{
-								a = new VAAction(VAActionType.MOVEEAST);
-							}
-							break;
-						case 1:
-							if( p.getNeighborhood().northIsFree() )
-							{
-								a = new VAAction(VAActionType.MOVENORTH);
-							}
-							break;
-						case 2:
-							if( p.getNeighborhood().southIsFree())
-							{
-								a = new VAAction(VAActionType.MOVESOUTH);
-							}
-							break;
-						case 3:
-							if( p.getNeighborhood().westIsFree())
-							{
-								a = new VAAction(VAActionType.MOVEWEST);
-							}
-							break;
-						default:
-							break;
-					}
-				}				
-				return a;
-			}
-		};
-				
-		VAEnvObservable state = new VAEnvObservable( a, point, null );
-		
-		new Main( state );
+	public static void main(String[] args) {
+		Point point = new Point(0, 0);
+
+		int choise = 2;
+		VAAgent a = null;
+		VAEnvironment state = null;
+
+		switch (choise) {
+		case 1:
+			VAagetnOneJGraphT a0 = new VAagetnOneJGraphT(100);
+			VAEnvObservable state0 = new VAEnvObservable(a, point, null);
+
+			a = a0;
+			state = state0;
+			break;
+		case 2:
+			VAagentTwo a1 = new VAagentTwo(100);
+			VAEnvSemiObservable state1 = new VAEnvSemiObservable(a1, point, null);
+
+			a = a1;
+			state = state1;
+			break;
+		case 3:
+			VAagentThree a2 = new VAagentThree(100);
+			VAEnvNonObservable state2 = new VAEnvNonObservable(a2, point, null);
+
+			a = a2;
+			state = state2;
+			break;
+		default:
+			break;
+		}
+
+		new Main(state);
 	}
 }
