@@ -56,15 +56,21 @@ public class FloorPanel extends JPanel{
 			drawPanel.addMouseListener(drawPanel);
 			drawPanel.addMouseMotionListener(drawPanel);
 			drawPanel.addKeyListener(drawPanel);
-			
+			toolbar.showButton();
 			drawPanel.setFocusable(true);
 			drawPanel.setElementToAdd(null);
 		}else{
-			toolbar.setVisible(false);
+			toolbar.hideButton();
 			drawPanel.removeMouseListener(drawPanel);
 			drawPanel.removeMouseMotionListener(drawPanel);
 			drawPanel.setElementToAdd(null);
 		}
+	}
+	
+	public void repaintFloor(int energy, double performancem){
+		toolbar.setEnPerformance(energy,performancem);
+		this.repaint();
+		
 	}
 	
 	
