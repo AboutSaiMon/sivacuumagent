@@ -42,6 +42,7 @@ public class StartActionListener implements ActionListener, Runnable
 				{
 					environment.step( 1 );
 					frame.getContentPane().repaint();
+					
 				}
 			}
 			else
