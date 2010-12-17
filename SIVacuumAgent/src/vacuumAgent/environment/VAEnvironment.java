@@ -11,7 +11,6 @@ import vacuumAgent.VAAction.VAActionType;
 import vacuumAgent.VATile.VATileStatus;
 
 import exception.VAIllegalMove;
-import framework.Agent;
 import framework.Environment;
 
 /**
@@ -182,7 +181,6 @@ public abstract class VAEnvironment implements Environment {
 		for (int i = 0; i < n; i++) {
 			this.step();
 		}
-
 	}
 	
 	/**
@@ -225,9 +223,9 @@ public abstract class VAEnvironment implements Environment {
 		
 		double p1 = Math.pow(clean, 2) / Math.pow(reachable, 2);
 		System.out.println("p1->"+p1);
-		double p2 = Math.log10(distanceFromStart / (Math.sqrt(reachable)*2) + 1)/2;
+		double p2 = (1/reachable) * (Math.log10(distanceFromStart+1) / Math.log10(reachable+1));
 		System.out.println("p2->"+p2);
-		double p3 = Math.log10(stepCount / (reachable*3) + 1)/3;
+		double p3 = (1/reachable) * (Math.log10(stepCount+1) / Math.log10(reachable*10+1));
 		System.out.println("p3->"+p3);
 			
 		return p1/(1+p2+p3);
