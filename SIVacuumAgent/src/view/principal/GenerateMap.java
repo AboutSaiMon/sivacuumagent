@@ -69,10 +69,10 @@ public class GenerateMap implements ActionListener {
 					environment.setFloor( new VAFloor( tails ) );
 					
 					FloorPanel floorPanel;
-					
-								
+												
 					floorPanel = new FloorPanel( environment );
 					floorPanel.setEditable( true );
+					
 					principalFrame.setSize( 800, 600 );
 					principalFrame.setContentPane( floorPanel );
 					

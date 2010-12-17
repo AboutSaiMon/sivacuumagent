@@ -39,7 +39,7 @@ public class FloorPanel extends JPanel{
 	}
 
 	/**
-	 * Restituisce true se il pannello è editabile, false altrimenti.
+	 * Restituisce true se il pannello ï¿½ editabile, false altrimenti.
 	 * @return boolean
 	 */
 	public boolean isEditable() {
@@ -69,9 +69,6 @@ public class FloorPanel extends JPanel{
 	
 	public void repaintFloor(int energy, double performancem){
 		toolbar.setEnPerformance(energy,performancem);
-		this.repaint();
-		
-	}
-	
-	
+		this.repaint();		
+	}		
 }
