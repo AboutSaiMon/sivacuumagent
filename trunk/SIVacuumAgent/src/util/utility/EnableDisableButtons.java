@@ -1,8 +1,8 @@
 package util.utility;
 
+import main.Main;
 import view.principal.SaveFileChooserActionListener;
 import view.principal.StartActionListener;
-import main.Main;
 
 public class EnableDisableButtons {
 

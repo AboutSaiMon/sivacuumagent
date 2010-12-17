@@ -27,7 +27,7 @@ public class StartActionListener implements ActionListener, Runnable
 		floor.setEditable( false );
 		frame.getSave().setEnabled( false );
 		Thread t = new Thread( this );
-		t.start();
+		t.start();		
 	}
 
 	@Override
@@ -41,14 +41,15 @@ public class StartActionListener implements ActionListener, Runnable
 				while( !environment.isDone() )
 				{
 					environment.step( 1 );
-					frame.getContentPane().repaint();
-					
+					FloorPanel panel = ( FloorPanel )frame.getContentPane();
+					panel.repaintFloor( environment.getVacuumAgent().getEnergy(), environment.getPerformanceMeasure() );
 				}
 			}
 			else
 			{
 				environment.step( step );
-				frame.getContentPane().repaint();
+				FloorPanel panel = ( FloorPanel )frame.getContentPane();
+				panel.repaintFloor( environment.getVacuumAgent().getEnergy(), environment.getPerformanceMeasure() );
 			}
 		} catch ( VAIllegalMove e ) {
 			// TODO Auto-generated catch block
@@ -57,5 +58,5 @@ public class StartActionListener implements ActionListener, Runnable
 		{
 			e.printStackTrace();
 		}
-	}
+	}	
 }
