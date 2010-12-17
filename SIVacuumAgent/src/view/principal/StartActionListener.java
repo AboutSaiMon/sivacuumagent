@@ -17,7 +17,7 @@ public class StartActionListener implements ActionListener, Runnable
 	public StartActionListener( Main frame, int step ) {
 		// TODO Auto-generated constructor stub
 		this.frame = frame;
-		this.step = step;
+		this.step = step;		
 	}
 	
 	@Override
@@ -27,7 +27,7 @@ public class StartActionListener implements ActionListener, Runnable
 		floor.setEditable( false );
 		frame.getSave().setEnabled( false );
 		Thread t = new Thread( this );
-		t.start();		
+		t.start();
 	}
 
 	@Override
@@ -46,7 +46,7 @@ public class StartActionListener implements ActionListener, Runnable
 				}
 			}
 			else
-			{
+			{				
 				environment.step( step );
 				FloorPanel panel = ( FloorPanel )frame.getContentPane();
 				panel.repaintFloor( environment.getVacuumAgent().getEnergy(), environment.getPerformanceMeasure() );

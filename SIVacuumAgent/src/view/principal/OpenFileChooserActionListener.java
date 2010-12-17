@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 
 import main.Main;
 import util.constants.Constants;
+import util.utility.EnableDisableButtons;
 import vacuumAgent.environment.VAEnvironment;
 import view.EnvironmentDrawPanel.FloorPanel;
 import file.FileManager;
@@ -38,22 +39,14 @@ public class OpenFileChooserActionListener implements ActionListener {
 				frame.getEnvironment().setVacuumAgentPosition( env.getVacuumAgentPosition() );
 				
 				FloorPanel floorPanel;
+				
 				floorPanel = new FloorPanel( frame.getEnvironment() );
 				
 				floorPanel.setEditable(false);
 				frame.setSize(800, 600);
 				frame.setContentPane(floorPanel);
-				frame.getGenerateMap().setEnabled( false );
-				frame.getGenerateRandomly().setEnabled( false );
-				frame.getLoad().setEnabled(false);
-				frame.getSave().setEnabled(true);
-				frame.getSave().addActionListener(
-						new SaveFileChooserActionListener(frame));
-				frame.getStart().setEnabled(true);
-				frame.getStart().addActionListener( new StartActionListener( frame, 0 ) );
-				frame.getMoveOneStep().setEnabled(true);
-				frame.getMoveOneStep().addActionListener( new StartActionListener( frame, 1 ) );
-				frame.setResizable( true );
+				
+				EnableDisableButtons.enableDisableButtons( frame );
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
