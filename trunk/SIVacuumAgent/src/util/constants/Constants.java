@@ -2,6 +2,7 @@ package util.constants;
 
 public class Constants {
 	public static String ALGORITHMTYPE = "Algorithm Type";
+	public static String BACK = "Back";
 	public static String DEFINEAGENT = "Define Agent";
 	public static String DUSTPERCENT = "Dust Percent";
 	public static String ENERGYLABEL = "Set Energy Value";
@@ -16,7 +17,7 @@ public class Constants {
 	public static String GENERATEMAP = "Generate Map";
 	public static String GENERATERANDOMLY = "Generate Map Randomly";
 	public static String HELP = "Help";
-	public static String INFORMATION = "Corso di Intelligenza Artificiale 2010/2011.\n\"La bellezza è negli occhi di chi guarda. ©\"";
+	public static String INFORMATION = "Corso di Intelligenza Artificiale 2010/2011.\n\"La bellezza ï¿½ negli occhi di chi guarda. ï¿½\"";
 	public static String MOVEONESTEP = "Move One Step";
 	public static String OK = "OK";
 	public static String OPEN = "Open File";
