@@ -40,7 +40,6 @@ public class Main extends JFrame{
 	JMenuItem generateMap = new JMenuItem( Constants.GENERATEMAP );
 	JMenuItem defineAgent = new JMenuItem( Constants.DEFINEAGENT );
 	JMenuItem start = new JMenuItem( Constants.START );
-	JMenuItem back = new JMenuItem( Constants.BACK );
 	JMenuItem moveOneStep = new JMenuItem( Constants.MOVEONESTEP );
 	JMenuItem help = new JMenuItem( Constants.HELP );
 	
@@ -79,12 +78,10 @@ public class Main extends JFrame{
 		JMenu action = new JMenu( "Action" );
 		
 		start.setEnabled( false );
-		moveOneStep.setEnabled( false );
-		back.setEnabled( false );
+		moveOneStep.setEnabled( false );		
 		
 		action.add( start );
 		action.add( moveOneStep );
-		action.add( back );
 		
 		JMenu about = new JMenu( "About" );		
 		about.add( help );
@@ -111,14 +108,6 @@ public class Main extends JFrame{
 		this.setJMenuBar( menuBar );
 		this.setSize( 300, 200 );		
 		this.setLocation( 300, 300 );
-	}
-	
-	public JMenuItem getBack() {
-		return back;
-	}
-
-	public void setBack(JMenuItem back) {
-		this.back = back;
 	}
 
 	public JMenuItem getLoad() {
